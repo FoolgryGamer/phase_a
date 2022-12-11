@@ -1,6 +1,8 @@
-module multi_54_54(
-	input [53:0] a,
-	input [53:0] b,
+module multi
+(#parameter radix = 54)
+(
+	input [radix-1:0] a,
+	input [radix-1:0] b,
     input clk,
 	output [44:0] res_0,
 	output [44:0] res_1,
@@ -41,7 +43,8 @@ module multi_54_54(
                 .P({result[i+3]}));
         end
     endgenerate
-	
+    
+	//original code(DSP slice usage is not well-scheduled)
     // assign res_0 = wire_a[0]*wire_b[0];
 	// assign res_1 = wire_a[0]*wire_b[1];      
 	// assign res_2 = wire_a[0]*wire_b[2];      

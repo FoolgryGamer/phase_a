@@ -37,6 +37,8 @@ module multiplier_upper_2_bit
     //This part is associated with the number of DSP slice
 	wire [INTERVAL-1:0] wire_a [2:0];
 	wire [INTERVAL-1:0] wire_b [2:0];
+
+	//this part needs to be change based on the partition strategy
 	assign wire_a[0] = a[INTERVAL-1:0];
 	assign wire_a[1] = a[INTERVAL*2-1:INTERVAL];
 	assign wire_a[2] = a[INTERVAL*3-1:INTERVAL*2];
