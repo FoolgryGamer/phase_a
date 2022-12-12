@@ -39,16 +39,12 @@ module inner_loop_new
 	integer j,p,q,k;
 	reg [2:0] cnt;
 	
-	reg [63:0] multi_a[15:0];
+	reg [53:0] multi_a[15:0];
 	// new 54*54 multiplier parameter part
 	wire [44:0] multi_res_0[15:0],multi_res_1[15:0],multi_res_2[15:0],multi_res_2[15:0],multi_res_3[15:0],multi_res_4[15:0],multi_res_5[15:0];
-
-	
-	reg [31:0] add1_a_0[15:0], add1_a_1[15:0], add1_a_2[15:0], add1_a_3[15:0];
-	reg [39:0] add1_a_4[15:0], add1_a_5[15:0], add1_a_6[15:0], add1_a_7[15:0],add1_a_8[15:0], add1_a_9[15:0], add1_a_10[15:0], add1_a_11[15:0];
-	wire [127:0] add1_res_0[15:0],add1_res_1[15:0],add1_res_2[15:0];
-	
-	reg [127:0] add2_a_0[15:0], add2_a_1[15:0], add2_a_2[15:0];
+	reg [44:0] add1_a_0[15:0], add1_a_1[15:0], add1_a_2[15:0], add1_a_3[15:0], add1_a_4[15:0], add1_a_5[15:0];
+	wire [127:0] add1_res_0[15:0],add1_res_1[15:0];
+	reg [127:0] add2_a_0[15:0], add2_a_1[15:0];
 	wire [127:0] add2_res[15:0];
 	
 	always @(posedge clk) begin

@@ -22,7 +22,7 @@ module add1
 	add2 add2_1(a_4_w,a_5_w,a_6_w,res_1);
 endmodule
 
-module add2
+module add2_adder_3
 #(radix = 54)
 (
 	input [radix*2-1:0] a_0,
@@ -31,6 +31,16 @@ module add2
 	output [radix*2-1:0] res
 );
 	assign res = a_0+a_1+a_2;
+endmodule
+
+module add2_adder_2
+#(radix = 54)
+(
+	input [radix*2-1:0] a_0,
+	input [radix*2-1:0] a_1,
+	output [radix*2-1:0] res
+);
+	assign res = a_0+a_1;
 endmodule
 
 // add more adder version

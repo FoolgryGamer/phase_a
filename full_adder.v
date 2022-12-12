@@ -34,7 +34,7 @@ module full_adder
         for(i=0;i<Size+Size_bi+Size_log;i=i+1) begin: BIT_ADDER
 			bit_adder bit_adder(a[i],b[i],cin[i],s[i],c[i]);
 		end
-	 endgenerate
+	endgenerate
 endmodule
 
 module bit_adder(
