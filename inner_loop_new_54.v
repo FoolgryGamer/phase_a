@@ -33,14 +33,19 @@ module inner_loop_new
 	output reg [Size+Size_bi+1:0] r1,
 	output en_out
     );
+
+	//**********************************
+	//what is this meaning??????
     wire [65:0] more = 2'b11*bi;
 	wire [65:0] more_bit = a[3073]?more:66'b0;
 	
+	// integer used for counting
 	integer j,p,q,k;
 	reg [2:0] cnt;
 	
-	reg [53:0] multi_a[15:0];
-	// new 54*54 multiplier parameter part
+	// 64*16 = 1024
+	reg [radix-1:0] multi_a[15:0];
+	// new 54*54 multiplier parameter part and the parameter of the associated adder
 	wire [44:0] multi_res_0[15:0],multi_res_1[15:0],multi_res_2[15:0],multi_res_2[15:0],multi_res_3[15:0],multi_res_4[15:0],multi_res_5[15:0];
 	reg [44:0] add1_a_0[15:0], add1_a_1[15:0], add1_a_2[15:0], add1_a_3[15:0], add1_a_4[15:0], add1_a_5[15:0];
 	wire [127:0] add1_res_0[15:0],add1_res_1[15:0];
@@ -188,7 +193,7 @@ module inner_loop_new
 	genvar i;
 	generate
 		for(i=0;i<16;i=i+1) begin
-			multi_64_64 multi_n(multi_a[i], bi, multi_res_low_0[i], multi_res_low_1[i], multi_res_low_2[i], multi_res_low_3[i], multi_res_high_0[i], multi_res_high_1[i], multi_res_high_2[i], multi_res_high_3[i]
+			multi multi_n(multi_a[i], bi, multi_res_low_0[i], multi_res_low_1[i], multi_res_low_2[i], multi_res_low_3[i], multi_res_high_0[i], multi_res_high_1[i], multi_res_high_2[i], multi_res_high_3[i]
 			, multi_res_high_4[i], multi_res_high_5[i], multi_res_high_6[i], multi_res_high_7[i]);
 			add1 add1_n(add1_a_0[i], add1_a_1[i], add1_a_2[i], add1_a_3[i], add1_a_4[i], add1_a_5[i], add1_a_6[i], add1_a_7[i],
 			add1_a_8[i], add1_a_9[i], add1_a_10[i], add1_a_11[i], add1_res_0[i],add1_res_1[i],add1_res_2[i]);

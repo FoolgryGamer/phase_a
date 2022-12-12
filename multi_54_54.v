@@ -11,6 +11,8 @@ module multi
 	output [44:0] res_4,
 	output [44:0] res_5
 );
+    
+    // this part needs to be changed based on the radix
 	wire [26:0] wire_a [1:0];
 	wire [17:0] wire_b [2:0];
     wire [44:0] result [5:0];
@@ -20,6 +22,7 @@ module multi
 	assign wire_b[1] = b[35:18];
 	assign wire_b[2] = b[53:36];
 
+    /***************************************/
     assign res_0 = result[0];
     assign res_1 = result[1];
     assign res_2 = result[2];

@@ -220,7 +220,7 @@ module phase_a
     inner_loop_new inner_loop_new(clk, rst_n, p[63:0], m_n, en_inner_loop, res_r0, res_r1, en_out_inner_loop);
     //cnt_2
     full_adder full_adder(a_adder,b_adder,cin_adder,s_adder,c_adder);
-    //cnt_3
+    //cnt_3    big number addition
     addition_new addition_new_0({184'd0, s_adder}, {183'd0, c_adder, 1'd0},  clk, rst_n, en_addition_0, c_addition_0, en_out_addition_0);
     //cnt_4
     addition_new addition_new_1(c_addition_0, b_addition_1,  clk, rst_n, en_addition_1, c_addition_1,  en_out_addition_1);
