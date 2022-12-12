@@ -35,16 +35,16 @@ module multiplier_upper_2_bit
     //***************************
     //Below part need modification manually
     //This part is associated with the number of DSP slice
-	wire [INTERVAL-1:0] wire_a [2:0];
-	wire [INTERVAL-1:0] wire_b [2:0];
+	wire [`INTERVAL-1:0] wire_a [2:0];
+	wire [`INTERVAL-1:0] wire_b [2:0];
 
 	//this part needs to be change based on the partition strategy
-	assign wire_a[0] = a[INTERVAL-1:0];
-	assign wire_a[1] = a[INTERVAL*2-1:INTERVAL];
-	assign wire_a[2] = a[INTERVAL*3-1:INTERVAL*2];
-	assign wire_b[0] = b[INTERVAL-1:0];
-	assign wire_b[1] = b[INTERVAL*2-1:INTERVAL];
-	assign wire_b[2] = b[INTERVAL*3-1:INTERVAL*2];
+	assign wire_a[0] = a[`INTERVAL-1:0];
+	assign wire_a[1] = a[`INTERVAL*2-1:`INTERVAL];
+	assign wire_a[2] = a[`INTERVAL*3-1:`INTERVAL*2];
+	assign wire_b[0] = b[`INTERVAL-1:0];
+	assign wire_b[1] = b[`INTERVAL*2-1:`INTERVAL];
+	assign wire_b[2] = b[`INTERVAL*3-1:`INTERVAL*2];
 	
     //used for store the intermediate results
 	wire [mul_size*2-1:0] out[8:0];
@@ -53,14 +53,14 @@ module multiplier_upper_2_bit
 
     // multiply, each cost a dsp slice
     assign out[0] = wire_a[0]*wire_b[0];
-	assign out[1] = (wire_a[0]*wire_b[1]) << INTERVAL;
-	assign out[2] = (wire_a[0]*wire_b[2]) << INTERVAL*2;
-	assign out[3] = (wire_a[1]*wire_b[0]) << INTERVAL;
-	assign out[4] = (wire_a[1]*wire_b[1]) << INTERVAL*2;
-	assign out[5] = (wire_a[1]*wire_b[2]) << INTERVAL*3;
-	assign out[6] = (wire_a[2]*wire_b[0]) << INTERVAL*2;
-	assign out[7] = (wire_a[2]*wire_b[1]) << INTERVAL*3;
-	assign out[8] = (wire_a[2]*wire_b[2]) << INTERVAL*4;
+	assign out[1] = (wire_a[0]*wire_b[1]) << `INTERVAL;
+	assign out[2] = (wire_a[0]*wire_b[2]) << `INTERVAL*2;
+	assign out[3] = (wire_a[1]*wire_b[0]) << `INTERVAL;
+	assign out[4] = (wire_a[1]*wire_b[1]) << `INTERVAL*2;
+	assign out[5] = (wire_a[1]*wire_b[2]) << `INTERVAL*3;
+	assign out[6] = (wire_a[2]*wire_b[0]) << `INTERVAL*2;
+	assign out[7] = (wire_a[2]*wire_b[1]) << `INTERVAL*3;
+	assign out[8] = (wire_a[2]*wire_b[2]) << `INTERVAL*4;
 
     add2 #(.radix(mul_size)) add_inst_0(.a_0(out[0]),.a_1(out[1]),.a_2(out[2]),.res(tmp[0]));
     add2 #(.radix(mul_size)) add_inst_1(.a_0(out[3]),.a_1(out[4]),.a_2(out[5]),.res(tmp[1]));
@@ -83,12 +83,12 @@ module multiplier_middle_bit
     //This part is associated with the number of DSP slice
 	wire [21:0] wire_a [2:0];
 	wire [21:0] wire_b [2:0];
-	assign wire_a[0] = a[INTERVAL-1:0];
-	assign wire_a[1] = a[INTERVAL*2-1:INTERVAL];
-	assign wire_a[2] = a[INTERVAL*3-1:INTERVAL*2];
-	assign wire_b[0] = b[INTERVAL-1:0];
-	assign wire_b[1] = b[INTERVAL*2-1:INTERVAL];
-	assign wire_b[2] = b[INTERVAL*3-1:INTERVAL*2];
+	assign wire_a[0] = a[`INTERVAL-1:0];
+	assign wire_a[1] = a[`INTERVAL*2-1:`INTERVAL];
+	assign wire_a[2] = a[`INTERVAL*3-1:`INTERVAL*2];
+	assign wire_b[0] = b[`INTERVAL-1:0];
+	assign wire_b[1] = b[`INTERVAL*2-1:`INTERVAL];
+	assign wire_b[2] = b[`INTERVAL*3-1:`INTERVAL*2];
 	
     //used for store the intermediate results
 	wire [mul_size*2-1:0] out[8:0];
@@ -97,14 +97,14 @@ module multiplier_middle_bit
 
     // multiply, each cost a dsp slice
     assign out[0] = wire_a[0]*wire_b[0];
-	assign out[1] = (wire_a[0]*wire_b[1]) << INTERVAL;
-	assign out[2] = (wire_a[0]*wire_b[2]) << INTERVAL*2;
-	assign out[3] = (wire_a[1]*wire_b[0]) << INTERVAL;
-	assign out[4] = (wire_a[1]*wire_b[1]) << INTERVAL*2;
-	assign out[5] = (wire_a[1]*wire_b[2]) << INTERVAL*3;
-	assign out[6] = (wire_a[2]*wire_b[0]) << INTERVAL*2;
-	assign out[7] = (wire_a[2]*wire_b[1]) << INTERVAL*3;
-	assign out[8] = (wire_a[2]*wire_b[2]) << INTERVAL*4;
+	assign out[1] = (wire_a[0]*wire_b[1]) << `INTERVAL;
+	assign out[2] = (wire_a[0]*wire_b[2]) << `INTERVAL*2;
+	assign out[3] = (wire_a[1]*wire_b[0]) << `INTERVAL;
+	assign out[4] = (wire_a[1]*wire_b[1]) << `INTERVAL*2;
+	assign out[5] = (wire_a[1]*wire_b[2]) << `INTERVAL*3;
+	assign out[6] = (wire_a[2]*wire_b[0]) << `INTERVAL*2;
+	assign out[7] = (wire_a[2]*wire_b[1]) << `INTERVAL*3;
+	assign out[8] = (wire_a[2]*wire_b[2]) << `INTERVAL*4;
 
     add2 #(.radix(mul_size)) add_inst_0(.a_0(out[0]),.a_1(out[1]),.a_2(out[2]),.res(tmp[0]));
     add2 #(.radix(mul_size)) add_inst_1(.a_0(out[3]),.a_1(out[4]),.a_2(out[5]),.res(tmp[1]));
