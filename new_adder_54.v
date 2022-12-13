@@ -23,22 +23,22 @@ module add1
 endmodule
 
 module add2_adder_3
-#(radix = 54)
+#(adder_size = 108)
 (
-	input [radix*2-1:0] a_0,
-	input [radix*2-1:0] a_1,
-	input [radix*2-1:0] a_2,
-	output [radix*2-1:0] res
+	input [adder_size-1:0] a_0,
+	input [adder_size-1:0] a_1,
+	input [adder_size-1:0] a_2,
+	output [adder_size-1:0] res
 );
 	assign res = a_0+a_1+a_2;
 endmodule
 
 module add2_adder_2
-#(radix = 54)
+#(adder_size = 108)
 (
-	input [radix*2-1:0] a_0,
-	input [radix*2-1:0] a_1,
-	output [radix*2-1:0] res
+	input [adder_size-1:0] a_0,
+	input [adder_size-1:0] a_1,
+	output [adder_size-1:0] res
 );
 	assign res = a_0+a_1;
 endmodule
