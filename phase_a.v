@@ -22,9 +22,9 @@
 ///////////////////////////////////////////////////*from process_a_pipeline_test_2_copy*//////////////////////////////////////////////////
 
 //parameter
-//size_log used for the carry bits(upper bits always be zero)
+//Size_add used for the carry bits(upper bits always be zero)
 module phase_a
-#(parameter Size = 3072, radix = 54, Size_log = 8, Size_add = 256*13)
+#(parameter Size = 3072, radix = 54, Size_add = 8, Size_add = 256*13)
 (
     input clk,
     input rst_n,
@@ -77,8 +77,8 @@ module phase_a
     wire en_out_inner_loop;
 
     //full_adder signal and output
-    reg [Size+radix+Size_log-1:0] a_adder, b_adder, cin_adder;
-    wire [Size+radix+Size_log-1:0] s_adder, c_adder;
+    reg [Size+radix+Size_add-1:0] a_adder, b_adder, cin_adder;
+    wire [Size+radix+Size_add-1:0] s_adder, c_adder;
 
     //addition enable signal and output
     reg en_addition_0;
@@ -87,27 +87,27 @@ module phase_a
     reg en_addition_1;
     wire [Size_add-1:0] c_addition_1;
     reg [Size_add-1:0] b_addition_1;
-    reg [Size+1:0] c0;
+    reg [Size+1:0] c_res;
     wire  en_out_addition_1;
 
     always @(posedge clk) begin
         if(~rst_n) begin
             reg_a <= 0;
-            reg_im <= 0; //p_top <= 0;
+            reg_im <= 0;
             en_inner_loop <= 0;
             a_adder <= 0; b_adder <= 0; cin_adder <= 0; 
             en_addition_0 <= 0;
             en_addition_1 <= 0;
-            c0 <= 0;
+            c_res <= 0;
         end
         else begin
             if(en_rising_edge) begin
             reg_m_prime <= m_prime;
-            reg_im <= {2'b0, a[(Size-1)-:130]};
+            reg_im <= {2'b0, a[(Size-1)-:110]};
             end
             if(cnt_0 == 3'd3) begin
                 en_inner_loop <= 1'b1;
-                reg_a <= {2'd0, a, 64'd0};
+                reg_a <= {2'd0, a, 54'd0};
             end
             else if(cnt_0 == 3'd4) begin
                 en_inner_loop <= 1'b0;
@@ -125,7 +125,7 @@ module phase_a
                 en_addition_0 <= 1'b0;
             end
             if(cnt_3 == 3'd1) begin             
-                if(gamma_m_mul[3073]) begin
+                if(gamma_m_mul[Size+1]) begin
                     b_addition_1 <= {256'd0, m};
                 end
                 else begin
@@ -135,7 +135,7 @@ module phase_a
             end
 
             else if(cnt_3 == 3'd2) begin       
-                c0 <= gamma_m_mul[Size+1:0];
+                c_res <= gamma_m_mul[Size+1:0];
                 en_addition_1 <= 1'b0;
             end
         end
@@ -216,7 +216,7 @@ module phase_a
 
     always @(*) begin
         case (cnt_4)
-            3'd3: new_a = c_addition_1[3073]?c0:c_addition_1[3071:0];
+            3'd3: new_a = c_addition_1[Size+1]?c_res:c_addition_1[Size-1:0];
             default: ;
         endcase
     end
