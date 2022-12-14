@@ -63,10 +63,10 @@ module multiplier_upper_2_bit
 	assign out[7] = (wire_a_high*wire_b_low[1]) << 54;
 	assign out[8] = (wire_a_high*wire_b_high) << 72;
 
-    add2_adder_3 #(.radix(mul_size*2)) add_inst_0(.a_0(out[0]),.a_1(out[1]),.a_2(out[2]),.res(tmp[0]));
-    add2_adder_3 #(.radix(mul_size*2)) add_inst_1(.a_0(out[3]),.a_1(out[4]),.a_2(out[5]),.res(tmp[1]));
-    add2_adder_3 #(.radix(mul_size*2)) add_inst_2(.a_0(out[6]),.a_1(out[7]),.a_2(out[8]),.res(tmp[2]));
-    add2_adder_3 #(.radix(mul_size*2)) add_inst_3(.a_0(tmp[0]),.a_1(tmp[1]),.a_2(tmp[2]),.res(res_t));
+    add2_adder_3 #(.adder_size(mul_size*2)) add_inst_0(.a_0(out[0]),.a_1(out[1]),.a_2(out[2]),.res(tmp[0]));
+    add2_adder_3 #(.adder_size(mul_size*2)) add_inst_1(.a_0(out[3]),.a_1(out[4]),.a_2(out[5]),.res(tmp[1]));
+    add2_adder_3 #(.adder_size(mul_size*2)) add_inst_2(.a_0(out[6]),.a_1(out[7]),.a_2(out[8]),.res(tmp[2]));
+    add2_adder_3 #(.adder_size(mul_size*2)) add_inst_3(.a_0(tmp[0]),.a_1(tmp[1]),.a_2(tmp[2]),.res(res_t));
 	assign res = res_t[radix*2+3:radix*2+2];
 endmodule
 
@@ -111,9 +111,9 @@ module multiplier_middle_bit
 	assign out[7] = (wire_a_high*wire_b_low[1]) << 54;
 	assign out[8] = (wire_a_high*wire_b_high) << 72;
 
-    add2_adder_3 #(.radix(mul_size*2)) add_inst_0(.a_0(out[0]),.a_1(out[1]),.a_2(out[2]),.res(tmp[0]));
-    add2_adder_3 #(.radix(mul_size*2)) add_inst_1(.a_0(out[3]),.a_1(out[4]),.a_2(out[5]),.res(tmp[1]));
-    add2_adder_3 #(.radix(mul_size*2)) add_inst_2(.a_0(out[6]),.a_1(out[7]),.a_2(out[8]),.res(tmp[2]));
-    add2_adder_3 #(.radix(mul_size*2)) add_inst_3(.a_0(tmp[0]),.a_1(tmp[1]),.a_2(tmp[2]),.res(res_t));
+    add2_adder_3 #(.adder_size(mul_size*2)) add_inst_0(.a_0(out[0]),.a_1(out[1]),.a_2(out[2]),.res(tmp[0]));
+    add2_adder_3 #(.adder_size(mul_size*2)) add_inst_1(.a_0(out[3]),.a_1(out[4]),.a_2(out[5]),.res(tmp[1]));
+    add2_adder_3 #(.adder_size(mul_size*2)) add_inst_2(.a_0(out[6]),.a_1(out[7]),.a_2(out[8]),.res(tmp[2]));
+    add2_adder_3 #(.adder_size(mul_size*2)) add_inst_3(.a_0(tmp[0]),.a_1(tmp[1]),.a_2(tmp[2]),.res(res_t));
 	assign res = res_t[radix*2-1:radix];
 endmodule

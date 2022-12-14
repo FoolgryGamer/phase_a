@@ -223,14 +223,14 @@ module phase_a
 
     //cnt_0
     multiplier_upper_2_bit multiplier_i0(clk,rst_n,reg_im[radix+1:0],reg_m_prime,res_i0);
-    multiplier_middle_bit multiplier_i1(clk,rst_n,reg_im[(radix+2)*2-1:56],reg_m_prime,res_i1);
+    multiplier_middle_bit multiplier_i1(clk,rst_n,reg_im[(radix+2)*2-1:radix+2],reg_m_prime,res_i1);
     //cnt_1
-    inner_loop_new inner_loop_new(clk, rst_n, gamma[63:0], m_n, en_inner_loop, res_r0, res_r1, en_out_inner_loop);
+    inner_loop_new inner_loop_new(clk, rst_n, gamma[radix-1:0], m_n, en_inner_loop, res_r0, res_r1, en_out_inner_loop);
     //cnt_2
     full_adder full_adder(a_adder,b_adder,cin_adder,s_adder,c_adder);
     //cnt_3    big number addition
-    addition_new addition_new_0({194'd0, s_adder}, {193'd0, c_adder, 1'd0},  clk, rst_n, en_addition_0, gamma_m_mul, en_out_addition_0);
+    big_number_addition addition_0({194'd0, s_adder}, {193'd0, c_adder, 1'd0},  clk, rst_n, en_addition_0, gamma_m_mul, en_out_addition_0);
     //cnt_4
-    addition_new addition_new_1(gamma_m_mul, b_addition_1,  clk, rst_n, en_addition_1, c_addition_1,  en_out_addition_1);
+    big_number_addition addition_1(gamma_m_mul, b_addition_1,  clk, rst_n, en_addition_1, c_addition_1,  en_out_addition_1);
     //addition_new addition_new_2(gamma_m_mul, {253'd0, m_n,1'd0},  clk, rst_n, en_addition_1, c_addition_2,  en_out_addition_2);
 endmodule

@@ -18,8 +18,8 @@ module add1
 	wire [radix*2-1:0] a_4_w = {18'b0,a_4,45'b0};
 	wire [radix*2-1:0] a_5_w = {a_5,63'b0};
 
-	add2 add2_0(a_0_w,a_1_w,a_2_w,res_0);
-	add2 add2_1(a_4_w,a_5_w,a_6_w,res_1);
+	add2_adder_3 add2_0(a_0_w,a_1_w,a_2_w,res_0);
+	add2_adder_3 add2_1(a_4_w,a_5_w,a_6_w,res_1);
 endmodule
 
 module add2_adder_3
