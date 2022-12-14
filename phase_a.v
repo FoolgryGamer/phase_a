@@ -24,7 +24,7 @@
 //parameter
 //Size_add used for the carry bits(upper bits always be zero)
 module phase_a
-#(parameter Size = 3072, radix = 54, Size_add = 8, Size_add = 256*13)
+#(parameter Size = 3072, radix = 54, Size_fill = 8, Size_add = 256*13)
 (
     input clk,
     input rst_n,
@@ -77,8 +77,8 @@ module phase_a
     wire en_out_inner_loop;
 
     //full_adder signal and output
-    reg [Size+radix+Size_add-1:0] a_adder, b_adder, cin_adder;
-    wire [Size+radix+Size_add-1:0] s_adder, c_adder;
+    reg [Size+radix+Size_fill-1:0] a_adder, b_adder, cin_adder;
+    wire [Size+radix+Size_fill-1:0] s_adder, c_adder;
 
     //addition enable signal and output
     reg en_addition_0;
@@ -229,7 +229,7 @@ module phase_a
     //cnt_2
     full_adder full_adder(a_adder,b_adder,cin_adder,s_adder,c_adder);
     //cnt_3    big number addition
-    addition_new addition_new_0({184'd0, s_adder}, {183'd0, c_adder, 1'd0},  clk, rst_n, en_addition_0, gamma_m_mul, en_out_addition_0);
+    addition_new addition_new_0({194'd0, s_adder}, {193'd0, c_adder, 1'd0},  clk, rst_n, en_addition_0, gamma_m_mul, en_out_addition_0);
     //cnt_4
     addition_new addition_new_1(gamma_m_mul, b_addition_1,  clk, rst_n, en_addition_1, c_addition_1,  en_out_addition_1);
     //addition_new addition_new_2(gamma_m_mul, {253'd0, m_n,1'd0},  clk, rst_n, en_addition_1, c_addition_2,  en_out_addition_2);

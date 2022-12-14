@@ -116,7 +116,7 @@ module big_number_addition
 endmodule
 
 module unit_adder
-(#parameter size = 256)
+#(parameter size = 256)
 (
     input [size-1:0] a,
     input [size-1:0] b,

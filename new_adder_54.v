@@ -23,7 +23,7 @@ module add1
 endmodule
 
 module add2_adder_3
-#(adder_size = 108)
+#(parameter adder_size = 108)
 (
 	input [adder_size-1:0] a_0,
 	input [adder_size-1:0] a_1,
@@ -34,7 +34,7 @@ module add2_adder_3
 endmodule
 
 module add2_adder_2
-#(adder_size = 108)
+#(parameter adder_size = 108)
 (
 	input [adder_size-1:0] a_0,
 	input [adder_size-1:0] a_1,

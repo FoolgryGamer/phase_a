@@ -1,5 +1,5 @@
 module multi
-(#parameter radix = 54)
+#(parameter radix = 54)
 (
 	input [radix-1:0] a,
 	input [radix-1:0] b,

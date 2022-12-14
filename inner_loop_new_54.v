@@ -46,7 +46,7 @@ module inner_loop_new
 	// 64*16 = 1024
 	reg [radix-1:0] multi_a[18:0];
 	// new 54*54 multiplier parameter part and the parameter of the associated adder
-	wire [44:0] multi_res_0[18:0],multi_res_1[18:0],multi_res_2[18:0],multi_res_2[18:0],multi_res_3[18:0],multi_res_4[18:0],multi_res_5[18:0];
+	wire [44:0] multi_res_0[18:0],multi_res_1[18:0],multi_res_2[18:0],multi_res_3[18:0],multi_res_4[18:0],multi_res_5[18:0];
 	reg [44:0] add1_a_0[18:0], add1_a_1[18:0], add1_a_2[18:0], add1_a_3[18:0], add1_a_4[18:0], add1_a_5[18:0];
 	wire [radix*2-1:0] add1_res_0[18:0],add1_res_1[18:0];
 	reg [radix*2-1:0] add2_a_0[18:0], add2_a_1[18:0];
