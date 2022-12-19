@@ -1,0 +1,53 @@
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 2022/11/11 20:33:41
+// Design Name: 
+// Module Name: tb
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+
+module tb;
+
+    reg clk, rst_n, en;
+    reg [3073:0] a;
+    reg [53:0] bi;
+    wire en_out;
+    wire [3127:0] r0,r1;
+    
+    initial begin
+        clk = 0;
+        rst_n = 0;
+        en = 0;
+        a = 3074'h3237ad864c06090a9128f138679cd00809d7d606512d8316468408b7578973b7c9b5e06e453022fc2ae6f4d699e21e2c2df94a93b6719835041166c541336707bc323bafdeb3bfc765fc46a71f033115323fa508bc745e5a6a3c186ce69958ed660451225c7c59e6bcc33ca5ae25e729533fcf57b4daccc5cd8cd7357a4bb1be9334e8518989a7886edbf3563b62e307de757c19a9f42db11357c1e451d1815f27085280a8704d733991599ab8374666ab3588de82861f2bf30ea16d5e25d43dd3e00fb454cf9b1e6d7a8519880bc40c0e1ad46928fdd7c58236677b8905852b660fea0f22d4a2bbdd89d2cb3bd9ca2437c3eb0212107089441e52fc2d39ff8a7780a7ee0889a265182bdfeadb32caa172718c6daad93ca9147098950fde859b48b34b529ada03608035bf10f118f0eefdd7fb4284083dcde36afa3954cb7f7d57b6aa2f5c7072259173cb8d97218cc0b5209b8a40b24077bbc0bcc9af8f2d2de3b8dad8fc9c895f450eaa2740e6d0dfdab77dbe90cfb52f766d33b1c9b7c2ffc;
+        bi = 56'b00110000_00110011_00101101_00110010_11010011_10000100_11101000;
+        // the answer is 0x9747a7e81e0bcbb5041196d05593df4b9bb43a5b00adfc34fb76ac34aa983720934c63f77cd7f68a91b4b117ed79a6f8642c2463e7363c2fc63af2b6f9cdbe91690244d899217e9f0fe7df3ce792cab2ba854cd3057b515fca3c1713aa6da6c095b37b7c85fee2629eca68b8f7b1f963cce252fd4b4f025b1de32abb5e851a104005f8ef1e1231af53e4c488b9825fd8f6f583ecce60f91086781686fb45d8f1cd01c60a4d18f4bcc3c1cc5558daac86b8ab3f2da2b718a015a79a08dead11b8d0661a963348b0f7385b24f6d6bcd18a9b93bf330b90b7628c6a995ddd33ba1e1af1c41a2fb419168bab7f30c9fbc1422e53d1dfd340036020b1afc8322ef7004bfd6ae7e254ae88b0f1745de0973992bd9c5736df3621c0b3c487fa37c75a085bb2b30bfd1f2d5bdeca3729527dd3779095c5fe3281aef43f4c742dad0050b74ca100d7dd2703fee9fd9f996a487972fb07568d497e721f6c5bfdc71d652614e873a042076edcb4c1200708a4c5f9c3656674a230bbb7dfba65d34bcf01297a7e5e1fb5fd6c60
+        #15
+        rst_n = 1;
+        #20
+        en = 1;
+        #10;
+        en = 0;
+        #1000;
+        $finish;
+        // #40
+        // a = 3072'hd284de3c3a6f2853ffdac3e1bc1adfd3e4162204d7daf6404d48841b888e1a8151e4713e8edd5adba45cdfc1b162b7ea88ab136e3d9d20cfd69c39877220bcbbd14c2432bfb41f511556997223afafb5c2c5b726a5901352538569d6c28e5d3da3e2374a38435626fc0ef0937f1444c9af4dfc18bbd7eaee5a51f095d47c3c9ec19633c435eedc8a5c700d71a6c099d5e0b53837e4026c04a5b1f3767d9d4ea08075e8d1fb5316353192dbf4db7c35c2ce1ccfe2741f5ed9edd89ca7b144b7e3fd2a4a1069c2fb74270a4059bd461f8f6cf62293f774b6ebe9adf1e169976649f44ec86e859360133b552a826158aeeebbb5c8d0c513140c386d2a93afde8f6ae15eb974226d22c0a5ae1fb8835dd1e49dd5b087eb55bbc753df2db49ade74386d4b1d663d5d0e6d09a5e4910d39cd7e8f8bc45a68b46a1d65d0f6211af7cfc470a6041cf3a4e32a4657d3ca5fdb69ee28c531f4878fa0f9fec215a3b9706a9b00394458bb20883753314c923b7bb975376b3c35c2e39056501206b0034f3088;
+        // en = 1;
+    end
+    
+    always #5 clk = ~clk;
+    inner_loop_new inst_tb(clk, rst_n, bi,a,en, r0,r1, en_out);
+endmodule

@@ -174,7 +174,7 @@ module inner_loop_new
 	genvar i;
 	generate
 		for(i=0;i<19;i=i+1) begin
-			multi multi_n(multi_a[i], bi, multi_res_0[i], multi_res_1[i], multi_res_2[i], multi_res_3[i], multi_res_4[i], multi_res_5[i]);
+			multi multi_n(multi_a[i], bi, clk,multi_res_0[i], multi_res_1[i], multi_res_2[i], multi_res_3[i], multi_res_4[i], multi_res_5[i]);
 			add1 add1_n(add1_a_0[i], add1_a_1[i], add1_a_2[i], add1_a_3[i], add1_a_4[i], add1_a_5[i],add1_res_0[i],add1_res_1[i]);
 			add2_adder_2 add2_n(add2_a_0[i], add2_a_1[i], add2_res[i]);
 		end
