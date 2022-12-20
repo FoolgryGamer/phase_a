@@ -66,10 +66,12 @@ module phase_a
     
     wire [1:0] res_i0;
     wire [radix-1:0] res_i1;
-    wire [radix-1:0] gamma_t0 = res_i0+res_i1;
-    wire [radix:0] gamma_t1 = res_i0+res_i1+1;
+    reg [radix-1:0] gamma_t0;
+    // reg [radix:0] gamma_t1 = res_i0+res_i1+1;
+    reg [radix:0] gamma_t1;
     //why is not gamma_t0?
-    wire [radix-1:0] gamma = gamma_t1[radix]?gamma_t0:gamma_t1[radix-1:0];
+    // reg [radix-1:0] gamma = gamma_t1[radix]?gamma_t0:gamma_t1[radix-1:0];
+    reg [radix-1:0] gamma;
 
     //inner_loop enable signal and output
     reg en_inner_loop;
@@ -105,7 +107,15 @@ module phase_a
             reg_m_prime <= m_prime;
             reg_im <= {2'b0, a[(Size-1)-:110]};
             end
-            if(cnt_0 == 3'd3) begin
+            if(cnt_0 == 3'd1) begin
+                gamma_t0 <= res_i0+res_i1;
+                gamma_t1 <= res_i0+res_i1+1;
+            end
+            else if(cnt_0 == 3'd2)begin
+                if(gamma_t1[radix]) gamma <= gamma_t0;
+                else gamma <= gamma_t1[radix-1:0];
+            end
+            else if(cnt_0 == 3'd3) begin
                 en_inner_loop <= 1'b1;
                 reg_a <= {2'd0, a, 54'd0};
             end
