@@ -227,7 +227,7 @@ module phase_a
     //cnt_1
     inner_loop_new inner_loop_new(clk, rst_n, gamma[radix-1:0], m_n, en_inner_loop, res_r0, res_r1, en_out_inner_loop);
     //cnt_2
-    full_adder full_adder(a_adder,b_adder,cin_adder,s_adder,c_adder);
+    full_adder #(.Size(Size),.Size_bi(radix),.Size_log(Size_fill)) full_adder(a_adder,b_adder,cin_adder,s_adder,c_adder);
     //cnt_3    big number addition
     big_number_addition addition_0({194'd0, s_adder}, {193'd0, c_adder, 1'd0},  clk, rst_n, en_addition_0, gamma_m_mul, en_out_addition_0);
     //cnt_4

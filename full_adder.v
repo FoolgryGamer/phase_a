@@ -21,7 +21,7 @@
 
 
 module full_adder
-#(parameter Size = 3072, Size_bi = 64, Size_log = 8)
+#(parameter Size = 3072, Size_bi = 54, Size_log = 8)
 (
     input [Size+Size_bi+Size_log-1:0] a,
     input [Size+Size_bi+Size_log-1:0] b,
