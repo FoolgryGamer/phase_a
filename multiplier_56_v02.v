@@ -44,7 +44,7 @@ module multiplier_upper_2_bit
 	assign wire_a_low[1] = a[35:18];
 	assign wire_a_high = a[55:36];
 	assign wire_b_low[0] = b[17:0];
-	assign wire_b_low[1] = b[35-1:18];
+	assign wire_b_low[1] = b[35:18];
 	assign wire_b_high = b[55:36];
 	
     //used for store the intermediate results
@@ -77,7 +77,7 @@ module multiplier_middle_bit
 	input rst_n,
 	input [mul_size-1:0] a,
 	input [mul_size-1:0] b,
-	output [1:0] res
+	output [radix-1:0] res
 );
 	//***************************
     //Below part need modification manually
@@ -92,7 +92,7 @@ module multiplier_middle_bit
 	assign wire_a_low[1] = a[35:18];
 	assign wire_a_high = a[55:36];
 	assign wire_b_low[0] = b[17:0];
-	assign wire_b_low[1] = b[35-1:18];
+	assign wire_b_low[1] = b[35:18];
 	assign wire_b_high = b[55:36];
 	
     //used for store the intermediate results
