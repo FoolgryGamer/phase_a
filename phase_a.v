@@ -65,7 +65,9 @@ module phase_a
     reg [2:0] cnt_4;
     
     wire [1:0] res_i0;
+    reg [1:0] reg_i0;
     wire [radix-1:0] res_i1;
+    reg [radix-1:0] reg_i1;
     reg [radix-1:0] gamma_t0;
     // reg [radix:0] gamma_t1 = res_i0+res_i1+1;
     reg [radix:0] gamma_t1;
@@ -108,18 +110,22 @@ module phase_a
             reg_im <= {2'b0, a[(Size-1)-:110]};
             end
             if(cnt_0 == 3'd1) begin
-                gamma_t0 <= res_i0+res_i1;
-                gamma_t1 <= res_i0+res_i1+1;
+                reg_i0 = res_i0;
+                reg_i1 = res_i1;
             end
-            else if(cnt_0 == 3'd2)begin
+            else if(cnt_0 == 3'd2) begin
+                gamma_t0 <= reg_i0+reg_i1;
+                gamma_t1 <= reg_i0+reg_i1+1;
+            end
+            else if(cnt_0 == 3'd3)begin
                 if(gamma_t1[radix]) gamma <= gamma_t0;
                 else gamma <= gamma_t1[radix-1:0];
             end
-            else if(cnt_0 == 3'd3) begin
+            else if(cnt_0 == 3'd4) begin
                 en_inner_loop <= 1'b1;
                 reg_a <= {2'd0, a, 54'd0};
             end
-            else if(cnt_0 == 3'd4) begin
+            else if(cnt_0 == 3'd5) begin
                 en_inner_loop <= 1'b0;
             end
             if(cnt_1 == 3'd3) begin
@@ -160,10 +166,10 @@ module phase_a
         else if(en_rising_edge) begin
             cnt_0 <= 3'd1;
         end
-        else if(cnt_0 > 3'd0 && cnt_0 < 3'd4) begin
+        else if(cnt_0 > 3'd0 && cnt_0 < 3'd5) begin
             cnt_0 <= cnt_0 + 1'b1;
         end
-        else if(cnt_0 == 3'd4) begin
+        else if(cnt_0 == 3'd5) begin
             cnt_0 <= 3'd0;
         end
     end
