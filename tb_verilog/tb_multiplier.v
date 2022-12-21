@@ -50,7 +50,7 @@ module tb;
     
     always #5 clk = ~clk;
 
-    multiplier_upper_2_bit multiplier_i0(clk,rst_n,a[55:0],bi,res_i0);
-    multiplier_middle_bit multiplier_i1(clk,rst_n,a[111:56],bi,res_i1);
+    multiplier_upper_2_bit multiplier_i0(clk,rst_n,en,a[55:0],bi,res_i0);
+    multiplier_middle_bit multiplier_i1(clk,rst_n,en,a[111:56],bi,res_i1);
 
 endmodule

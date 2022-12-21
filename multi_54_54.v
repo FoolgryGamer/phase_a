@@ -30,28 +30,28 @@ module multi
     assign res_4 = result[4];
     assign res_5 = result[5];
 
-    //  genvar i;
-    //  generate
-    //      for(i=0;i<3;i=i+1) begin: dsp_generate
-    //          dsp_macro_0 inst_dsp_0(
-    //              .CLK(clk),
-    //              .A(wire_a[0]),
-    //              .B(wire_b[i]),
-    //              .P({result[i]}));
+     genvar i;
+     generate
+         for(i=0;i<3;i=i+1) begin: dsp_generate
+             dsp_macro_0 inst_dsp_0(
+                 .CLK(clk),
+                 .A(wire_a[0]),
+                 .B(wire_b[i]),
+                 .P({result[i]}));
 
-    //          dsp_macro_0 inst_dsp_1(
-    //              .CLK(clk),
-    //              .A(wire_a[1]),
-    //              .B(wire_b[i]),
-    //              .P({result[i+3]}));
-    //      end
-    //  endgenerate
+             dsp_macro_0 inst_dsp_1(
+                 .CLK(clk),
+                 .A(wire_a[1]),
+                 .B(wire_b[i]),
+                 .P({result[i+3]}));
+         end
+     endgenerate
     
 	//original code(DSP slice usage is not well-scheduled)
-    assign res_0 = wire_a[0]*wire_b[0];
-	assign res_1 = wire_a[0]*wire_b[1];      
-	assign res_2 = wire_a[0]*wire_b[2];      
-	assign res_3 = wire_a[1]*wire_b[0];
-	assign res_4 = wire_a[1]*wire_b[1];    
-	assign res_5 = wire_a[1]*wire_b[2];    
+    // assign res_0 = wire_a[0]*wire_b[0];
+	// assign res_1 = wire_a[0]*wire_b[1];      
+	// assign res_2 = wire_a[0]*wire_b[2];      
+	// assign res_3 = wire_a[1]*wire_b[0];
+	// assign res_4 = wire_a[1]*wire_b[1];    
+	// assign res_5 = wire_a[1]*wire_b[2];    
 endmodule

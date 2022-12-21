@@ -71,6 +71,8 @@ module phase_a
     //why is not gamma_t0?
     wire [radix-1:0] gamma = gamma_t1[radix]?gamma_t0:gamma_t1[radix-1:0];
 
+    //multiplier
+    reg en_multiplier;
     //inner_loop enable signal and output
     reg en_inner_loop;
     wire [Size+radix+1:0] res_r0, res_r1;
@@ -98,14 +100,19 @@ module phase_a
             a_adder <= 0; b_adder <= 0; cin_adder <= 0; 
             en_addition_0 <= 0;
             en_addition_1 <= 0;
+            en_multiplier <= 1'b0;
             c_res <= 0;
         end
         else begin
             if(en_rising_edge) begin
             reg_m_prime <= m_prime;
             reg_im <= {2'b0, a[(Size-1)-:110]};
+            en_multiplier <= 1'b1;
             end
-            if(cnt_0 == 3'd3) begin
+            if(cnt_0 == 3'd1) begin
+                en_multiplier <= 1'b0;
+            end
+            else if(cnt_0 == 3'd3) begin
                 en_inner_loop <= 1'b1;
                 reg_a <= {2'd0, a, 54'd0};
             end
@@ -222,8 +229,8 @@ module phase_a
     end
 
     //cnt_0
-    multiplier_upper_2_bit multiplier_i0(clk,rst_n,reg_im[radix+1:0],reg_m_prime,res_i0);
-    multiplier_middle_bit multiplier_i1(clk,rst_n,reg_im[(radix+2)*2-1:radix+2],reg_m_prime,res_i1);
+    multiplier_upper_2_bit multiplier_i0(clk,rst_n,en_multiplier,reg_im[radix+1:0],reg_m_prime,res_i0);
+    multiplier_middle_bit multiplier_i1(clk,rst_n,en_multiplier,reg_im[(radix+2)*2-1:radix+2],reg_m_prime,res_i1);
     //cnt_1
     inner_loop_new inner_loop_new(clk, rst_n, gamma[radix-1:0], m_n, en_inner_loop, res_r0, res_r1, en_out_inner_loop);
     //cnt_2
