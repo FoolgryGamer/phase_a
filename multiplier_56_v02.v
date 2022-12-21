@@ -109,11 +109,21 @@ module multiplier_middle_bit
 	assign wire_b_high = b[55:36];
 	
     //used for store the intermediate results
-	reg [mul_size*2-1:0] out[8:0];
+	reg [39:0] out[8:0];
 	reg [mul_size*2-1:0] tmp[2:0];
 	reg [mul_size*2-1:0] res_t;
-
+	wire [mul_size*2-1:0] wire_out[8:0];
     // multiply, each cost a dsp slice
+	assign wire_out[0] = {72'b0,out[0]};
+	assign wire_out[1] = {54'b0,out[1],18'b0}; 
+	assign wire_out[2] = {36'b0,out[2],36'b0};
+	assign wire_out[3] = {54'b0,out[3],18'b0};
+	assign wire_out[4] = {36'b0,out[4],36'b0};
+	assign wire_out[5] = {18'b0,out[5],54'b0};
+	assign wire_out[6] = {36'b0,out[6],36'b0};
+	assign wire_out[7] = {18'b0,out[7],54'b0};
+	assign wire_out[8] = {out[8],72'b0};
+
 	always @(posedge clk) begin
 		if(~rst_n) begin
 			out[0] <= 0; out[1] <= 0; out[2] <= 0; 
@@ -122,19 +132,19 @@ module multiplier_middle_bit
 			res_t <= 0;
 		end
 		else begin
-			out[0] <= wire_a_low[0]*wire_b_low[0];
-			out[1] <= (wire_a_low[0]*wire_b_low[1]) << 18;
-			out[2] <= (wire_a_low[0]*wire_b_high) << 36;
-			out[3] <= (wire_a_low[1]*wire_b_low[0]) << 18;
-			out[4] <= (wire_a_low[1]*wire_b_low[1]) << 36;
-			out[5] <= (wire_a_low[1]*wire_b_high) << 54;
-			out[6] <= (wire_a_high*wire_b_low[0]) << 36;
-			out[7] <= (wire_a_high*wire_b_low[1]) << 54;
-			out[8] <= (wire_a_high*wire_b_high) << 72; 
+			out[0] <= {4'b0,wire_a_low[0]*wire_b_low[0]};
+			out[1] <= {4'b0,wire_a_low[0]*wire_b_low[1]};
+			out[2] <= {2'b0,wire_a_low[0]*wire_b_high};
+			out[3] <= {4'b0,wire_a_low[1]*wire_b_low[0]};
+			out[4] <= {4'b0,wire_a_low[1]*wire_b_low[1]};
+			out[5] <= {2'b0,wire_a_low[1]*wire_b_high};
+			out[6] <= {2'b0,wire_a_high*wire_b_low[0]};
+			out[7] <= {2'b0,wire_a_high*wire_b_low[1]};
+			out[8] <= wire_a_high*wire_b_high; 
 
-			tmp[0] <= out[0] + out[1] + out[2];
-			tmp[1] <= out[3] + out[4] + out[5];
-			tmp[2] <= out[6] + out[7] + out[8];
+			tmp[0] <= wire_out[0] + wire_out[1] + wire_out[2];
+			tmp[1] <= wire_out[3] + wire_out[4] + wire_out[5];
+			tmp[2] <= wire_out[6] + wire_out[7] + wire_out[8];
 			
 			res_t <= tmp[0] + tmp[1] + tmp[2];
 		end
