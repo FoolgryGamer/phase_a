@@ -229,8 +229,8 @@ module phase_a
     end
 
     //cnt_0
-    multiplier_upper_2_bit multiplier_i0(clk,rst_n,en_multiplier,reg_im[radix+1:0],reg_m_prime,res_i0);
-    multiplier_middle_bit multiplier_i1(clk,rst_n,en_multiplier,reg_im[(radix+2)*2-1:radix+2],reg_m_prime,res_i1);
+    multiplier_upper_2_bit #(.mul_size(radix+2),.radix(radix)) multiplier_i0(clk,rst_n,en_multiplier,reg_im[radix+1:0],reg_m_prime,res_i0);
+    multiplier_middle_bit  #(.mul_size(radix+2),.radix(radix)) multiplier_i1(clk,rst_n,en_multiplier,reg_im[(radix+2)*2-1:radix+2],reg_m_prime,res_i1);
     //cnt_1
     inner_loop_new inner_loop_new(clk, rst_n, gamma[radix-1:0], m_n, en_inner_loop, res_r0, res_r1, en_out_inner_loop);
     //cnt_2
