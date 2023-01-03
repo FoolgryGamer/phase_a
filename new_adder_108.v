@@ -76,13 +76,3 @@ module add2_adder_5
 );
 	assign res = a_0+a_1+a_2+a_3+a_4;
 endmodule
-
-module add2_adder_2
-#(parameter adder_size = 108)
-(
-	input [adder_size-1:0] a_0,
-	input [adder_size-1:0] a_1,
-	output [adder_size-1:0] res
-);
-	assign res = a_0+a_1;
-endmodule
