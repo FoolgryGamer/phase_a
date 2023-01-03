@@ -1,4 +1,4 @@
-print_part =3
+print_part = 6
 
 if print_part == 0:
     for i in range(4):
@@ -35,4 +35,20 @@ elif print_part == 3:
             print(";")
         else:
             print(",",end = "")
-        
+elif print_part == 4:
+    for i in range(24):
+        # print("add1_a_{}[p] <= 0;".format(i))
+        print("add1_a_{}[p] <= multi_res_{}[p];".format(i,i))
+
+elif print_part == 5:
+    for i in range(24):
+        if i == 23:
+            print("multi_res_{}[i]".format(i),end = "")
+        else:
+            print("multi_res_{}[i],".format(i),end = "")
+
+elif print_part == 6:
+    for i in range(24):
+        print("add1_a_{}[i],".format(i),end = "")
+    for i in range(5):
+        print("add1_res_{}[i],".format(i),end = "")
