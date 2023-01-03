@@ -1,6 +1,6 @@
 import numpy as np
 
-test_icon = 0
+test_icon = 1
 if test_icon == 0:
     ###################################
     #inner_loop test
@@ -15,55 +15,74 @@ elif test_icon == 1:
     ###################################
     #multiplier test  
     # radix = 54 
-    a1 = 0xdbe90cfb52f766_dbe90cfb52f766
-    a2 = 0xd3_3b1c_9b7c_2ffc_dbe90cfb52f766
-    bi = 0b110000_00110011_00101101_00110010_11010011_10000100_11101000_110000_00110011_00101101_00110010_11010011_10000100_11101000
-    a11 =a1 & 0x3ffff
-    a12 =(a1 & 0xffffc0000) >> 18
-    a13 =a1 >> 36
-    a21 =a2 & 0x3ffff
-    a22 =(a2 & 0xffffc0000) >> 18
-    a23 =a2 >> 36
-    b1 =bi & 0x3ffff
-    b2 =(bi & 0xffffc0000) >> 18
-    b3 =bi >> 36
+    a1 = 0x1be90cfb52f766_dbe90cfb52f766
+    bi = 0b00110000_00110011_00101101_00110010_11010011_10000100_11101000_00110000_00110011_00101101_00110010_11010011_10000100_111010
+    a11 =a1 & 0x1ffffff
+    a12 =(a1 & 0x3fffffe000000) >> 25
+    a13 =(a1 & 0x7fffffc000000000000) >> 50
+    a14 =(a1 & 0xffffff8000000000000000000) >> 75
+    a15 =a1 >> 100
+    b1 = bi & 0xffff
+    b2 =(bi & 0xffffffff) >> 16
+    b3 =(bi & 0xffffffffffff) >> 32
+    b4 =(bi & 0xffffffffffffffff) >> 48
+    b5 =(bi & 0xffffffffffffffffffff) >> 64
+    b6 =(bi & 0xffffffffffffffffffffffff) >> 80
+    b7 = bi >> 96
     print("***************")
     print(hex(a11))
     print(hex(a12))
     print(hex(a13))
-    print(hex(a21))
-    print(hex(a22))
-    print(hex(a23))
+    print(hex(a14))
+    print(hex(a15))
     print(hex(b1))
     print(hex(b2))
     print(hex(b3))
+    print(hex(b4))
+    print(hex(b5))
+    print(hex(b6))
+    print(hex(b7))
     print("***************")
     print(hex(a11*b1))
     print(hex(a11*b2))
     print(hex(a11*b3))
+    print(hex(a11*b4))
+    print(hex(a11*b5))
+    print(hex(a11*b6))
+    print(hex(a11*b7))
     print(hex(a12*b1))
     print(hex(a12*b2))
     print(hex(a12*b3))
+    print(hex(a12*b4))
+    print(hex(a12*b5))
+    print(hex(a12*b6))
+    print(hex(a12*b7))
     print(hex(a13*b1))
     print(hex(a13*b2))
     print(hex(a13*b3))
-    print("***************")
-    print(hex(a21*b1))
-    print(hex(a21*b2))
-    print(hex(a21*b3))
-    print(hex(a22*b1))
-    print(hex(a22*b2))
-    print(hex(a22*b3))
-    print(hex(a23*b1))
-    print(hex(a23*b2))
-    print(hex(a23*b3))
+    print(hex(a13*b4))
+    print(hex(a13*b5))
+    print(hex(a13*b6))
+    print(hex(a13*b7))
+    print(hex(a14*b1))
+    print(hex(a14*b2))
+    print(hex(a14*b3))
+    print(hex(a14*b4))
+    print(hex(a14*b5))
+    print(hex(a14*b6))
+    print(hex(a14*b7))
+    print(hex(a15*b1))
+    print(hex(a15*b2))
+    print(hex(a15*b3))
+    print(hex(a15*b4))
+    print(hex(a15*b5))
+    print(hex(a15*b6))
+    print(hex(a15*b7))
     print("***************")
     print(hex(a1*bi))
-    print(hex(a2*bi))
     print("***************")
     print(hex(bi))
     print(hex(a1))
-    print(hex(a2))
-    print(hex((a2*bi)>>110))
-    print(hex((a1*bi) >> 54))
-    print(hex(((a1*bi)>>108)<<54))
+    print(hex((a1*bi)>>218))
+    print(hex((a1*bi) >> 108))
+    print(hex(((a1*bi)>>216)<<108))
