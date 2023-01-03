@@ -20,32 +20,40 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////*from inner_loop_new*//////////////////////////////////////
+parameter blocks = 15;
 
 module inner_loop_new
-#(parameter Size = 3072, radix = 54)
+#(parameter Size = 3072, radix = 108)
 (
 	input clk,
 	input rst_n,
 	input [radix-1:0] bi,
 	input [Size+1:0] a,
 	input en,
-	output reg [Size+radix+1:0] r0,// 3072+64 = 3136  3136+2=3138
+	output reg [Size+radix+1:0] r0,
 	output reg [Size+radix+1:0] r1,
 	output en_out
     );
 
 	//**********************************
-	//what is this meaning??????
-    // wire [radix+1:0] more = 2'b11*bi;
-	// wire [radix+1:0] more_bit = a[3073]?more:56'b0;
-	
+
 	// integer used for counting
 	integer j,p,q,k;
 	reg [2:0] cnt;
 	
-	// 64*16 = 1024
-	reg [radix-1:0] multi_a[18:0];
-	// new 54*54 multiplier parameter part and the parameter of the associated adder
+	reg [radix-1:0] multi_a[block_per_clk-1:0];
+	// new 108*108 multiplier parameter part and the parameter of the associated adder
+	wire [44:0] multi_res_0[blocks-1:0],multi_res_1[blocks-1:0],multi_res_2[blocks-1:0],multi_res_3[blocks-1:0],multi_res_4[blocks-1:0],multi_res_5[blocks-1:0];
+	wire [44:0] multi_res_6[blocks-1:0],multi_res_7[blocks-1:0],multi_res_8[blocks-1:0],multi_res_9[blocks-1:0],multi_res_10[blocks-1:0],multi_res_11[blocks-1:0];
+	wire [44:0] multi_res_12[blocks-1:0],multi_res_13[blocks-1:0],multi_res_14[blocks-1:0],multi_res_15[blocks-1:0],multi_res_16[blocks-1:0],multi_res_17[blocks-1:0];
+	wire [44:0] multi_res_18[blocks-1:0],multi_res_19[blocks-1:0],multi_res_20[blocks-1:0],multi_res_21[blocks-1:0],multi_res_22[blocks-1:0],multi_res_23[blocks-1:0];
+	reg [44:0] add1_a_0[blocks-1:0],add1_a_1[blocks-1:0],add1_a_2[blocks-1:0],add1_a_3[blocks-1:0],add1_a_4[blocks-1:0],add1_a_5[blocks-1:0];
+	reg [44:0] add1_a_6[blocks-1:0],add1_a_7[blocks-1:0],add1_a_8[blocks-1:0],add1_a_9[blocks-1:0],add1_a_10[blocks-1:0],add1_a_11[blocks-1:0];
+	reg [44:0] add1_a_12[blocks-1:0],add1_a_13[blocks-1:0],add1_a_14[blocks-1:0],add1_a_15[blocks-1:0],add1_a_16[blocks-1:0],add1_a_17[blocks-1:0];
+	reg [44:0] add1_a_18[blocks-1:0],add1_a_19[blocks-1:0],add1_a_20[blocks-1:0],add1_a_21[blocks-1:0],add1_a_22[blocks-1:0],add1_a_23[blocks-1:0];
+	wire [radix*2-1:0] add1_res_0,add1_res_1,add1_res_2,add1_res_3,add1_res_4,add1_res_5,add1_res_6,add1_res_7;
+	reg [radix*2-1:0] add2_a_0,add2_a_1,add2_a_2,add2_a_3,add2_a_4,add2_a_5,add2_a_6,add2_a_7;
+
 	wire [44:0] multi_res_0[18:0],multi_res_1[18:0],multi_res_2[18:0],multi_res_3[18:0],multi_res_4[18:0],multi_res_5[18:0];
 	reg [44:0] add1_a_0[18:0], add1_a_1[18:0], add1_a_2[18:0], add1_a_3[18:0], add1_a_4[18:0], add1_a_5[18:0];
 	wire [radix*2-1:0] add1_res_0[18:0],add1_res_1[18:0];
@@ -55,10 +63,10 @@ module inner_loop_new
 	always @(posedge clk) begin
 		if(~rst_n) begin
 			cnt <= 3'd0;
-			for(j=0;j<19;j=j+1) begin
+			for(j=0;j<blocks-1;j=j+1) begin
 				multi_a[j] <= 0;
 			end
-			for(p=0;p<19;p=p+1) begin
+			for(p=0;p<blocks-1;p=p+1) begin
 				add1_a_0[p] <= 0;
 				add1_a_1[p] <= 0;
 				add1_a_2[p] <= 0;
@@ -66,7 +74,7 @@ module inner_loop_new
 				add1_a_4[p] <= 0;
 				add1_a_5[p] <= 0;
 			end
-			for(q=0;q<19;q=q+1) begin
+			for(q=0;q<blocks-1;q=q+1) begin
 				add2_a_0[q] <= 0;
 				add2_a_1[q] <= 0;
 			end

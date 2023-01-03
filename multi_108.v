@@ -71,40 +71,58 @@ module multi
     assign res_22 = result[22];
     assign res_23 = result[23];
 
-     genvar i;
-     generate
-         for(i=0;i<6;i=i+1) begin: dsp_generate
-             dsp_macro_0 inst_dsp_0(
-                 .CLK(clk),
-                 .A(wire_a[0]),
-                 .B(wire_b[i]),
-                 .P({result[i]}));
+    //  genvar i;
+    //  generate
+    //      for(i=0;i<6;i=i+1) begin: dsp_generate
+    //          dsp_macro_0 inst_dsp_0(
+    //              .CLK(clk),
+    //              .A(wire_a[0]),
+    //              .B(wire_b[i]),
+    //              .P({result[i]}));
 
-             dsp_macro_0 inst_dsp_1(
-                 .CLK(clk),
-                 .A(wire_a[1]),
-                 .B(wire_b[i]),
-                 .P({result[i+6]}));
+    //          dsp_macro_0 inst_dsp_1(
+    //              .CLK(clk),
+    //              .A(wire_a[1]),
+    //              .B(wire_b[i]),
+    //              .P({result[i+6]}));
 
-             dsp_macro_0 inst_dsp_2(
-                 .CLK(clk),
-                 .A(wire_a[2]),
-                 .B(wire_b[i]),
-                 .P({result[i+12]}));
+    //          dsp_macro_0 inst_dsp_2(
+    //              .CLK(clk),
+    //              .A(wire_a[2]),
+    //              .B(wire_b[i]),
+    //              .P({result[i+12]}));
 
-             dsp_macro_0 inst_dsp_3(
-                 .CLK(clk),
-                 .A(wire_a[3]),
-                 .B(wire_b[i]),
-                 .P({result[i+18]}));
-         end
-     endgenerate
+    //          dsp_macro_0 inst_dsp_3(
+    //              .CLK(clk),
+    //              .A(wire_a[3]),
+    //              .B(wire_b[i]),
+    //              .P({result[i+18]}));
+    //      end
+    //  endgenerate
     
 	//original code(DSP slice usage is not well-scheduled)
-    // assign res_0 = wire_a[0]*wire_b[0];
-	// assign res_1 = wire_a[0]*wire_b[1];      
-	// assign res_2 = wire_a[0]*wire_b[2];      
-	// assign res_3 = wire_a[1]*wire_b[0];
-	// assign res_4 = wire_a[1]*wire_b[1];    
-	// assign res_5 = wire_a[1]*wire_b[2];    
+    assign res_0 = wire_a[0]*wire_b[0];
+    assign res_1 = wire_a[0]*wire_b[1];
+    assign res_2 = wire_a[0]*wire_b[2];
+    assign res_3 = wire_a[0]*wire_b[3];
+    assign res_4 = wire_a[0]*wire_b[4];
+    assign res_5 = wire_a[0]*wire_b[5];
+    assign res_6 = wire_a[1]*wire_b[0];
+    assign res_7 = wire_a[1]*wire_b[1];
+    assign res_8 = wire_a[1]*wire_b[2];
+    assign res_9 = wire_a[1]*wire_b[3];
+    assign res_10 = wire_a[1]*wire_b[4];
+    assign res_11 = wire_a[1]*wire_b[5];
+    assign res_12 = wire_a[2]*wire_b[0];
+    assign res_13 = wire_a[2]*wire_b[1];
+    assign res_14 = wire_a[2]*wire_b[2];
+    assign res_15 = wire_a[2]*wire_b[3];
+    assign res_16 = wire_a[2]*wire_b[4];
+    assign res_17 = wire_a[2]*wire_b[5];
+    assign res_18 = wire_a[3]*wire_b[0];
+    assign res_19 = wire_a[3]*wire_b[1];
+    assign res_20 = wire_a[3]*wire_b[2];
+    assign res_21 = wire_a[3]*wire_b[3];
+    assign res_22 = wire_a[3]*wire_b[4];
+    assign res_23 = wire_a[3]*wire_b[5];   
 endmodule
