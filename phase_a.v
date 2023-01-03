@@ -106,7 +106,7 @@ module phase_a
         else begin
             if(en_rising_edge) begin
             reg_m_prime <= m_prime;
-            reg_im <= {2'b0, a[(Size-1)-:110]};
+            reg_im <= {2'b0, a[(Size-1)-:218]};
             en_multiplier <= 1'b1;
             end
             if(cnt_0 == 3'd1) begin
@@ -114,7 +114,7 @@ module phase_a
             end
             else if(cnt_0 == 3'd3) begin
                 en_inner_loop <= 1'b1;
-                reg_a <= {2'd0, a, 54'd0};
+                reg_a <= {2'd0, a, 108'd0};
             end
             else if(cnt_0 == 3'd4) begin
                 en_inner_loop <= 1'b0;
@@ -171,10 +171,10 @@ module phase_a
         else if(cnt_0 == 3'd4) begin
             cnt_1 <= 3'd1;
         end
-        else if(cnt_1 > 3'd0 && cnt_1 < 3'd5) begin
+        else if(cnt_1 > 3'd0 && cnt_1 < 3'd4) begin
             cnt_1 <= cnt_1 + 1'b1;
         end
-        else if(cnt_1 == 3'd5) begin
+        else if(cnt_1 == 3'd4) begin
             cnt_1 <= 3'd0;
         end
     end
@@ -182,7 +182,7 @@ module phase_a
         if(~rst_n) begin
             cnt_2 <= 3'd0;
         end
-        else if(cnt_1 == 3'd5) begin
+        else if(cnt_1 == 3'd4) begin
             cnt_2 <= 3'd1;
         end
         else if(cnt_2 > 3'd0 && cnt_2 < 3'd4) begin
