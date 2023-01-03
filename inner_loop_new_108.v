@@ -20,7 +20,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////*from inner_loop_new*//////////////////////////////////////
-parameter blocks = 15;
+
 
 module inner_loop_new
 #(parameter Size = 3072, radix = 108)
@@ -35,13 +35,14 @@ module inner_loop_new
 	output en_out
     );
 
+	parameter blocks = 15;
 	//**********************************
 
 	// integer used for counting
 	integer j,p,q,k;
 	reg [2:0] cnt;
 	
-	reg [radix-1:0] multi_a[block_per_clk-1:0];
+	reg [radix-1:0] multi_a[blocks-1:0];
 	// new 108*108 multiplier parameter part and the parameter of the associated adder
 	wire [44:0] multi_res_0[blocks-1:0],multi_res_1[blocks-1:0],multi_res_2[blocks-1:0],multi_res_3[blocks-1:0],multi_res_4[blocks-1:0],multi_res_5[blocks-1:0];
 	wire [44:0] multi_res_6[blocks-1:0],multi_res_7[blocks-1:0],multi_res_8[blocks-1:0],multi_res_9[blocks-1:0],multi_res_10[blocks-1:0],multi_res_11[blocks-1:0];
@@ -51,8 +52,8 @@ module inner_loop_new
 	reg [44:0] add1_a_6[blocks-1:0],add1_a_7[blocks-1:0],add1_a_8[blocks-1:0],add1_a_9[blocks-1:0],add1_a_10[blocks-1:0],add1_a_11[blocks-1:0];
 	reg [44:0] add1_a_12[blocks-1:0],add1_a_13[blocks-1:0],add1_a_14[blocks-1:0],add1_a_15[blocks-1:0],add1_a_16[blocks-1:0],add1_a_17[blocks-1:0];
 	reg [44:0] add1_a_18[blocks-1:0],add1_a_19[blocks-1:0],add1_a_20[blocks-1:0],add1_a_21[blocks-1:0],add1_a_22[blocks-1:0],add1_a_23[blocks-1:0];
-	wire [radix*2-1:0] add1_res_0,add1_res_1,add1_res_2,add1_res_3,add1_res_4;
-	reg [radix*2-1:0] add2_a_0,add2_a_1,add2_a_2,add2_a_3,add2_a_4;
+	wire [radix*2-1:0] add1_res_0[blocks-1:0],add1_res_1[blocks-1:0],add1_res_2[blocks-1:0],add1_res_3[blocks-1:0],add1_res_4[blocks-1:0];
+	reg [radix*2-1:0] add2_a_0[blocks-1:0],add2_a_1[blocks-1:0],add2_a_2[blocks-1:0],add2_a_3[blocks-1:0],add2_a_4[blocks-1:0];
 	wire [radix*2-1:0] add2_res[blocks-1:0];
 	
 	always @(posedge clk) begin
@@ -230,10 +231,10 @@ module inner_loop_new
 	
 	genvar i;
 	generate
-		for(i=0;i<19;i=i+1) begin
+		for(i=0;i<blocks;i=i+1) begin
 			multi multi_n(multi_a[i], bi, clk,multi_res_0[i],multi_res_1[i],multi_res_2[i],multi_res_3[i],multi_res_4[i],multi_res_5[i],multi_res_6[i],multi_res_7[i],multi_res_8[i],multi_res_9[i],multi_res_10[i],multi_res_11[i],multi_res_12[i],multi_res_13[i],multi_res_14[i],multi_res_15[i],multi_res_16[i],multi_res_17[i],multi_res_18[i],multi_res_19[i],multi_res_20[i],multi_res_21[i],multi_res_22[i],multi_res_23[i]);
-			add1 add1_n(add1_a_0[i],add1_a_1[i],add1_a_2[i],add1_a_3[i],add1_a_4[i],add1_a_5[i],add1_a_6[i],add1_a_7[i],add1_a_8[i],add1_a_9[i],add1_a_10[i],add1_a_11[i],add1_a_12[i],add1_a_13[i],add1_a_14[i],add1_a_15[i],add1_a_16[i],add1_a_17[i],add1_a_18[i],add1_a_19[i],add1_a_20[i],add1_a_21[i],add1_a_22[i],add1_a_23[i],add1_res_0[i],add1_res_1[i],add1_res_2[i],add1_res_3[i],add1_res_4[i]);
-			add2_adder_5 add2_n(add2_a_0[i], add2_a_1[i],add2_a_2[i], add2_a_3[i],add2_a_4[i], add2_res[i]);
+			add1#(.radix(radix)) add1_n(add1_a_0[i],add1_a_1[i],add1_a_2[i],add1_a_3[i],add1_a_4[i],add1_a_5[i],add1_a_6[i],add1_a_7[i],add1_a_8[i],add1_a_9[i],add1_a_10[i],add1_a_11[i],add1_a_12[i],add1_a_13[i],add1_a_14[i],add1_a_15[i],add1_a_16[i],add1_a_17[i],add1_a_18[i],add1_a_19[i],add1_a_20[i],add1_a_21[i],add1_a_22[i],add1_a_23[i],add1_res_0[i],add1_res_1[i],add1_res_2[i],add1_res_3[i],add1_res_4[i]);
+			add2_adder_5#(.adder_size(radix*2)) add2_n(add2_a_0[i], add2_a_1[i],add2_a_2[i], add2_a_3[i],add2_a_4[i], add2_res[i]);
 		end
 	endgenerate
 endmodule
