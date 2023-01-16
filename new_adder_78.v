@@ -16,15 +16,6 @@ module add1
 	input [Size-1:0] a_12,
 	input [Size-1:0] a_13,
 	input [Size-1:0] a_14,
-	input [Size-1:0] a_15,
-	input [Size-1:0] a_16,
-	input [Size-1:0] a_17,
-	input [Size-1:0] a_18,
-	input [Size-1:0] a_19,
-	input [Size-1:0] a_20,
-	input [Size-1:0] a_21,
-	input [Size-1:0] a_22,
-	input [Size-1:0] a_23,
 	output [radix*2-1:0] res_0,
 	output [radix*2-1:0] res_1,
 	output [radix*2-1:0] res_2
@@ -62,4 +53,15 @@ module add2_adder_5
 	output [adder_size-1:0] res
 );
 	assign res = a_0+a_1+a_2+a_3+a_4;
+endmodule
+
+module add2_adder_3
+#(parameter adder_size = 108)
+(
+	input [adder_size-1:0] a_0,
+	input [adder_size-1:0] a_1,
+	input [adder_size-1:0] a_2,
+	output [adder_size-1:0] res
+);
+	assign res = a_0+a_1+a_2;
 endmodule
