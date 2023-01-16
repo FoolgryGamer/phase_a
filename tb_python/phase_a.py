@@ -5,12 +5,16 @@ k_radix = 78
 a = a << k_radix
 print(hex(a))
 length = 3072
-m_prime = 0x30332d32d384e830332d
+m_plus = (m >> (length - k_radix -3)) + 1
+print(bin(m_plus))
+m_prime = round((1 << (2*k_radix+4))/m_plus)
+print(hex(m_prime))
 
 a_plus = a >> (3072-k_radix-1-2)
+print(hex(a_plus))
 gamma = (a_plus * m_prime) >> (k_radix*2 + 4)
 print(hex(gamma))
 
-print(hex((a << k_radix) %m_n))
-print(hex(a%m))
-print(hex(a%m_n))
+# print(hex((a << k_radix) %m_n))
+# print(hex(a%m))
+# print(hex(a%m_n))

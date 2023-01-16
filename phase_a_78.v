@@ -24,7 +24,7 @@
 //parameter
 //Size_add used for the carry bits(upper bits always be zero)
 module phase_a
-#(parameter Size = 3072, radix = 78, Size_fill = 8, Size_add = 256*13)
+#(parameter Size = 3072, radix = 78, Size_fill = 8, Size_add = 128*25)
 (
     input clk,
     input rst_n,
@@ -106,7 +106,7 @@ module phase_a
         else begin
             if(en_rising_edge) begin
             reg_m_prime <= m_prime;
-            reg_im <= {2'b0, a[(Size-1)-:158]};
+            reg_im <= {a[(Size-1)-:(2*radix+4)]};
             en_multiplier <= 1'b1;
             end
             if(cnt_0 == 3'd1) begin
