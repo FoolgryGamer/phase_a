@@ -165,7 +165,7 @@ module inner_loop_new
 				if(k == blocks*2-1) begin
 					// special case due to the imbalance partition
 					r0[(radix*k)+:radix] <= add2_res[k-blocks][radix-1:0];
-					r1[3151:3120] <= add2_res[19][107:78];
+					r1[3151:3120] <= add2_res[19][109:78];
 				end
 				else begin
 					r0[(radix*k)+:radix] <= add2_res[k-blocks][radix-1:0];
