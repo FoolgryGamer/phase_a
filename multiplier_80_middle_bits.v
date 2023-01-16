@@ -8,7 +8,7 @@ module multiplier_middle_bit
 	input en,
 	input [mul_size-1:0] a,
 	input [mul_size-1:0] b,
-	output [2*radix+1:0] res
+	output [radix-1:0] res
 );
 	//***************************
     //Below part need modification manually
@@ -93,5 +93,5 @@ module multiplier_middle_bit
 			end
 		end
 	end
-	assign res = res_t[radix*2+1:0];
+	assign res = res_t[radix*2+1:radix+2];
 endmodule
