@@ -1,6 +1,6 @@
 import numpy as np
 
-test_icon = 2
+test_icon = 1
 if test_icon == 0:
     ###################################
     #inner_loop test
@@ -15,8 +15,9 @@ elif test_icon == 1:
     ###################################
     #multiplier test  
     # radix = 54 
-    a1 = 0x52f766_dbe90cfb52f766
-    bi = 0b00110010_11010011_10000100_11101000_00110000_00110011_00101101_00110010_11010011_10000100
+    # a = 0x2a9bdc04eb286f4410d4_1d2a19d4eb0d76f05ac9
+    a1 = 0x2a9bdc04eb286f4410d4
+    bi = 0x949819969969c0000000
     a11 =a1 & 0xfffff
     a12 =(a1 >> 20) & 0xfffff
     a13 =(a1 >> 40) & 0xfffff
@@ -54,8 +55,4 @@ elif test_icon == 1:
     print("***************")
     print(hex(a1*bi))
     print("***************")
-    print(hex(bi))
-    print(hex(a1))
-    print(hex((a1*bi)>>158))
-    print(hex((a1*bi) >> 78))
-    print(hex(((a1*bi)>>158)<<78))
+    print(hex((a1*bi) >> 80))

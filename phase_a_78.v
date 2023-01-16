@@ -64,12 +64,11 @@ module phase_a
     reg [2:0] cnt_3;
     reg [2:0] cnt_4;
     
-    wire [1:0] res_i0;
-    wire [radix-1:0] res_i1;
-    wire [radix-1:0] gamma_t0 = res_i0+res_i1;
-    wire [radix:0] gamma_t1 = res_i0+res_i1+1;
+    wire [radix+1:0] res_i0;
+    wire [2*radix+1:0] res_i1;
+    wire [2*radix+1:0] gamma_t0 = res_i0+res_i1;
     //why is not gamma_t0?
-    wire [radix-1:0] gamma = gamma_t1[radix]?gamma_t0:gamma_t1[radix-1:0];
+    wire [radix-1:0] gamma = gamma_t0[2*radix+1:radix+2];
 
     //multiplier
     reg en_multiplier;
@@ -106,7 +105,7 @@ module phase_a
         else begin
             if(en_rising_edge) begin
             reg_m_prime <= m_prime;
-            reg_im <= {a[(Size-1)-:(2*radix+4)]};
+            reg_im <= {1'b0,a[(Size-1)-:(2*radix+3)]};
             en_multiplier <= 1'b1;
             end
             if(cnt_0 == 3'd1) begin
