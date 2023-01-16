@@ -23,17 +23,17 @@
 module tb;
 
     reg clk, rst_n, en;
-    reg [111:0] a;
-    reg [109:0] bi;
+    reg [79:0] a;
+    reg [79:0] bi;
     wire [1:0] res_i0;
-    wire [107:0]res_i1;
+    wire [78:0]res_i1;
     
     initial begin
         clk = 0;
         rst_n = 0;
         en = 0;
-        a = 112'hdbe90cfb52f766_dbe90cfb52f766;
-        bi = 110'b00110000_00110011_00101101_00110010_11010011_10000100_11101000_00110000_00110011_00101101_00110010_11010011_10000100_111010;
+        a = 80'h52f766_dbe90cfb52f766;
+        bi = 80'b00110010_11010011_10000100_11101000_00110000_00110011_00101101_00110010_11010011_10000100;
         // the answer is 0x9747a7e81e0bcbb5041196d05593df4b9bb43a5b00adfc34fb76ac34aa983720934c63f77cd7f68a91b4b117ed79a6f8642c2463e7363c2fc63af2b6f9cdbe91690244d899217e9f0fe7df3ce792cab2ba854cd3057b515fca3c1713aa6da6c095b37b7c85fee2629eca68b8f7b1f963cce252fd4b4f025b1de32abb5e851a104005f8ef1e1231af53e4c488b9825fd8f6f583ecce60f91086781686fb45d8f1cd01c60a4d18f4bcc3c1cc5558daac86b8ab3f2da2b718a015a79a08dead11b8d0661a963348b0f7385b24f6d6bcd18a9b93bf330b90b7628c6a995ddd33ba1e1af1c41a2fb419168bab7f30c9fbc1422e53d1dfd340036020b1afc8322ef7004bfd6ae7e254ae88b0f1745de0973992bd9c5736df3621c0b3c487fa37c75a085bb2b30bfd1f2d5bdeca3729527dd3779095c5fe3281aef43f4c742dad0050b74ca100d7dd2703fee9fd9f996a487972fb07568d497e721f6c5bfdc71d652614e873a042076edcb4c1200708a4c5f9c3656674a230bbb7dfba65d34bcf01297a7e5e1fb5fd6c60
         #15
         rst_n = 1;
@@ -50,7 +50,7 @@ module tb;
     
     always #5 clk = ~clk;
 
-    multiplier_upper_2_bit multiplier_i0(clk,rst_n,en,a[109:0],bi,res_i0);
-    multiplier_middle_bit multiplier_i1(clk,rst_n,en,a[109:0],bi,res_i1);
+    multiplier_upper_2_bit multiplier_i0(clk,rst_n,en,a,bi,res_i0);
+    multiplier_middle_bit multiplier_i1(clk,rst_n,en,a,bi,res_i1);
 
 endmodule

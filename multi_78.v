@@ -24,7 +24,7 @@ module multi
     // this part needs to be changed based on the radix
 	wire [25:0] wire_a [2:0];
 	wire [16:0] wire_b [4:0];
-    wire [42:0] result [14:0];
+    wire [44:0] result [14:0];
 	assign wire_a[0] = a[25:0];
 	assign wire_a[1] = a[51:26];
     assign wire_a[2] = a[77:52];
@@ -35,41 +35,41 @@ module multi
 	assign wire_b[4] = {7'b0,b[77:68]};
 
     /***************************************/
-    assign res_0 = result[0];
-    assign res_1 = result[1];
-    assign res_2 = result[2];
-    assign res_3 = result[3];
-    assign res_4 = result[4];
-    assign res_5 = result[5];
-    assign res_6 = result[6];
-    assign res_7 = result[7];
-    assign res_8 = result[8];
-    assign res_9 = result[9];
-    assign res_10 = result[10];
-    assign res_11 = result[11];
-    assign res_12 = result[12];
-    assign res_13 = result[13];
-    assign res_14 = result[14];
+    assign res_0 = result[0][42:0];
+    assign res_1 = result[1][42:0];
+    assign res_2 = result[2][42:0];
+    assign res_3 = result[3][42:0];
+    assign res_4 = result[4][42:0];
+    assign res_5 = result[5][42:0];
+    assign res_6 = result[6][42:0];
+    assign res_7 = result[7][42:0];
+    assign res_8 = result[8][42:0];
+    assign res_9 = result[9][42:0];
+    assign res_10 = result[10][42:0];
+    assign res_11 = result[11][42:0];
+    assign res_12 = result[12][42:0];
+    assign res_13 = result[13][42:0];
+    assign res_14 = result[14][42:0];
 
     //  genvar i;
     //  generate
     //      for(i=0;i<5;i=i+1) begin: dsp_generate
     //          dsp_macro_0 inst_dsp_0(
     //              .CLK(clk),
-    //              .A(wire_a[0]),
-    //              .B(wire_b[i]),
+    //              .A({1'b0,wire_a[0]}),
+    //              .B({1'b0,wire_b[i]}),
     //              .P({result[i]}));
 
     //          dsp_macro_0 inst_dsp_1(
     //              .CLK(clk),
-    //              .A(wire_a[1]),
-    //              .B(wire_b[i]),
+    //              .A({1'b0,wire_a[1]}),
+    //              .B({1'b0,wire_b[i]}),
     //              .P({result[i+5]}));
 
     //          dsp_macro_0 inst_dsp_2(
     //              .CLK(clk),
-    //              .A(wire_a[2]),
-    //              .B(wire_b[i]),
+    //              .A({1'b0,wire_a[2]}),
+    //              .B({1'b0,wire_b[i]}),
     //              .P({result[i+10]}));
     //      end
     //  endgenerate

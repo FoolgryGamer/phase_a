@@ -24,7 +24,7 @@
 //parameter
 //Size_add used for the carry bits(upper bits always be zero)
 module phase_a
-#(parameter Size = 3072, radix = 108, Size_fill = 8, Size_add = 256*13)
+#(parameter Size = 3072, radix = 78, Size_fill = 8, Size_add = 256*13)
 (
     input clk,
     input rst_n,
@@ -106,7 +106,7 @@ module phase_a
         else begin
             if(en_rising_edge) begin
             reg_m_prime <= m_prime;
-            reg_im <= {2'b0, a[(Size-1)-:218]};
+            reg_im <= {2'b0, a[(Size-1)-:158]};
             en_multiplier <= 1'b1;
             end
             if(cnt_0 == 3'd1) begin
@@ -114,7 +114,7 @@ module phase_a
             end
             else if(cnt_0 == 3'd3) begin
                 en_inner_loop <= 1'b1;
-                reg_a <= {2'd0, a, 108'd0};
+                reg_a <= {2'd0, a, 78'd0};
             end
             else if(cnt_0 == 3'd4) begin
                 en_inner_loop <= 1'b0;
@@ -133,14 +133,13 @@ module phase_a
             end
             if(cnt_3 == 3'd1) begin             
                 if(gamma_m_mul[Size+1]) begin
-                    b_addition_1 <= {256'd0, m};
+                    b_addition_1 <= {128'd0, m};
                 end
                 else begin
-                    b_addition_1 <= {254'd0, m_n};
+                    b_addition_1 <= {126'd0, m_n};
                 end
                 en_addition_1 <= 1'b1;
             end
-
             else if(cnt_3 == 3'd2) begin       
                 c_res <= gamma_m_mul[Size+1:0];
                 en_addition_1 <= 1'b0;
@@ -236,8 +235,8 @@ module phase_a
     //cnt_2
     full_adder #(.Size(Size),.Size_bi(radix),.Size_log(Size_fill)) full_adder(a_adder,b_adder,cin_adder,s_adder,c_adder);
     //cnt_3    big number addition
-    big_number_addition addition_0({140'd0, s_adder}, {139'd0, c_adder, 1'd0},  clk, rst_n, en_addition_0, gamma_m_mul, en_out_addition_0);
+    addition_3072_128 addition_0({42'd0, s_adder}, {41'd0, c_adder, 1'd0},  clk, rst_n, en_addition_0, gamma_m_mul, en_out_addition_0);
     //cnt_4
-    big_number_addition addition_1(gamma_m_mul, b_addition_1,  clk, rst_n, en_addition_1, c_addition_1,  en_out_addition_1);
+    addition_3072_128 addition_1(gamma_m_mul, b_addition_1,  clk, rst_n, en_addition_1, c_addition_1,  en_out_addition_1);
     //addition_new addition_new_2(gamma_m_mul, {253'd0, m_n,1'd0},  clk, rst_n, en_addition_1, c_addition_2,  en_out_addition_2);
 endmodule
