@@ -23,7 +23,7 @@
 
 
 module inner_loop_new
-#(parameter Size = 3072, radix = 108)
+#(parameter Size = 3072, radix = 78)
 (
 	input clk,
 	input rst_n,
@@ -35,7 +35,7 @@ module inner_loop_new
 	output en_out
     );
 
-	parameter blocks = 15;
+	parameter blocks = 20;
 	//**********************************
 
 	// integer used for counting
@@ -46,14 +46,12 @@ module inner_loop_new
 	// new 108*108 multiplier parameter part and the parameter of the associated adder
 	wire [44:0] multi_res_0[blocks-1:0],multi_res_1[blocks-1:0],multi_res_2[blocks-1:0],multi_res_3[blocks-1:0],multi_res_4[blocks-1:0],multi_res_5[blocks-1:0];
 	wire [44:0] multi_res_6[blocks-1:0],multi_res_7[blocks-1:0],multi_res_8[blocks-1:0],multi_res_9[blocks-1:0],multi_res_10[blocks-1:0],multi_res_11[blocks-1:0];
-	wire [44:0] multi_res_12[blocks-1:0],multi_res_13[blocks-1:0],multi_res_14[blocks-1:0],multi_res_15[blocks-1:0],multi_res_16[blocks-1:0],multi_res_17[blocks-1:0];
-	wire [44:0] multi_res_18[blocks-1:0],multi_res_19[blocks-1:0],multi_res_20[blocks-1:0],multi_res_21[blocks-1:0],multi_res_22[blocks-1:0],multi_res_23[blocks-1:0];
+	wire [44:0] multi_res_12[blocks-1:0],multi_res_13[blocks-1:0],multi_res_14[blocks-1:0];
 	reg [44:0] add1_a_0[blocks-1:0],add1_a_1[blocks-1:0],add1_a_2[blocks-1:0],add1_a_3[blocks-1:0],add1_a_4[blocks-1:0],add1_a_5[blocks-1:0];
 	reg [44:0] add1_a_6[blocks-1:0],add1_a_7[blocks-1:0],add1_a_8[blocks-1:0],add1_a_9[blocks-1:0],add1_a_10[blocks-1:0],add1_a_11[blocks-1:0];
-	reg [44:0] add1_a_12[blocks-1:0],add1_a_13[blocks-1:0],add1_a_14[blocks-1:0],add1_a_15[blocks-1:0],add1_a_16[blocks-1:0],add1_a_17[blocks-1:0];
-	reg [44:0] add1_a_18[blocks-1:0],add1_a_19[blocks-1:0],add1_a_20[blocks-1:0],add1_a_21[blocks-1:0],add1_a_22[blocks-1:0],add1_a_23[blocks-1:0];
-	wire [radix*2-1:0] add1_res_0[blocks-1:0],add1_res_1[blocks-1:0],add1_res_2[blocks-1:0],add1_res_3[blocks-1:0],add1_res_4[blocks-1:0];
-	reg [radix*2-1:0] add2_a_0[blocks-1:0],add2_a_1[blocks-1:0],add2_a_2[blocks-1:0],add2_a_3[blocks-1:0],add2_a_4[blocks-1:0];
+	reg [44:0] add1_a_12[blocks-1:0],add1_a_13[blocks-1:0],add1_a_14[blocks-1:0];
+	wire [radix*2-1:0] add1_res_0[blocks-1:0],add1_res_1[blocks-1:0],add1_res_2[blocks-1:0];
+	reg [radix*2-1:0] add2_a_0[blocks-1:0],add2_a_1[blocks-1:0],add2_a_2[blocks-1:0];
 	wire [radix*2-1:0] add2_res[blocks-1:0];
 	
 	always @(posedge clk) begin
@@ -78,22 +76,11 @@ module inner_loop_new
 				add1_a_12[p] <= 0;
 				add1_a_13[p] <= 0;
 				add1_a_14[p] <= 0;
-				add1_a_15[p] <= 0;
-				add1_a_16[p] <= 0;
-				add1_a_17[p] <= 0;
-				add1_a_18[p] <= 0;
-				add1_a_19[p] <= 0;
-				add1_a_20[p] <= 0;
-				add1_a_21[p] <= 0;
-				add1_a_22[p] <= 0;
-				add1_a_23[p] <= 0;
 			end
 			for(q=0;q<blocks;q=q+1) begin
 				add2_a_0[q] <= 0;
 				add2_a_1[q] <= 0;
 				add2_a_2[q] <= 0;
-				add2_a_3[q] <= 0;
-				add2_a_4[q] <= 0;
 			end
 	        r0 <= 0;
 	        r1 <= 0;
@@ -110,10 +97,7 @@ module inner_loop_new
 			// r0[Size+radix+1:Size] <= more_bit;
 			for(j=blocks;j<blocks*2;j=j+1) begin
 				if(j == blocks*2 - 1) begin
-					multi_a[j-blocks] <= 108'b0;
-				end
-				else if(j == blocks*2 - 2) begin 
-					multi_a[j-blocks] <= {58'b0,a[3073:3024]};
+					multi_a[j-blocks] <= {46'b0,a[3073:3042]};
 				end
 				else begin
 					multi_a[j-blocks] <= a[(radix*j)+:radix];
@@ -135,15 +119,6 @@ module inner_loop_new
 				add1_a_12[p] <= multi_res_12[p];
 				add1_a_13[p] <= multi_res_13[p];
 				add1_a_14[p] <= multi_res_14[p];
-				add1_a_15[p] <= multi_res_15[p];
-				add1_a_16[p] <= multi_res_16[p];
-				add1_a_17[p] <= multi_res_17[p];
-				add1_a_18[p] <= multi_res_18[p];
-				add1_a_19[p] <= multi_res_19[p];
-				add1_a_20[p] <= multi_res_20[p];
-				add1_a_21[p] <= multi_res_21[p];
-				add1_a_22[p] <= multi_res_22[p];
-				add1_a_23[p] <= multi_res_23[p];
 			end
 		end
 		else if(cnt == 3'd2) begin
@@ -164,22 +139,11 @@ module inner_loop_new
 				add1_a_12[p] <= multi_res_12[p];
 				add1_a_13[p] <= multi_res_13[p];
 				add1_a_14[p] <= multi_res_14[p];
-				add1_a_15[p] <= multi_res_15[p];
-				add1_a_16[p] <= multi_res_16[p];
-				add1_a_17[p] <= multi_res_17[p];
-				add1_a_18[p] <= multi_res_18[p];
-				add1_a_19[p] <= multi_res_19[p];
-				add1_a_20[p] <= multi_res_20[p];
-				add1_a_21[p] <= multi_res_21[p];
-				add1_a_22[p] <= multi_res_22[p];
-				add1_a_23[p] <= multi_res_23[p];
 			end
 			for(q=0;q<blocks;q=q+1) begin
 				add2_a_0[q] <= add1_res_0[q];
 				add2_a_1[q] <= add1_res_1[q];
 				add2_a_2[q] <= add1_res_2[q];
-				add2_a_3[q] <= add1_res_3[q];
-				add2_a_4[q] <= add1_res_4[q];
 			end
 		end
 		else if(cnt == 3'd3) begin
@@ -188,8 +152,6 @@ module inner_loop_new
 				add2_a_0[q] <= add1_res_0[q];
 				add2_a_1[q] <= add1_res_1[q];
 				add2_a_2[q] <= add1_res_2[q];
-				add2_a_3[q] <= add1_res_3[q];
-				add2_a_4[q] <= add1_res_4[q];
 			end
 			for(k=0;k<blocks;k=k+1) begin
 				r0[(radix*k)+:radix] <= add2_res[k][radix-1:0];
@@ -198,11 +160,11 @@ module inner_loop_new
 		end
 		else if(cnt == 3'd4) begin
 			cnt <= 3'd5;
-			for(k=blocks;k<blocks*2-1;k=k+1) begin
-				if(k == blocks*2-2) begin
+			for(k=blocks;k<blocks*2;k=k+1) begin
+				if(k == blocks*2-1) begin
 					// special case due to the imbalance partition
 					r0[(radix*k)+:radix] <= add2_res[k-blocks][radix-1:0];
-					r1[3181:3132] <= add2_res[13][157:108];
+					r1[3151:3120] <= add2_res[19][107:78];
 				end
 				else begin
 					r0[(radix*k)+:radix] <= add2_res[k-blocks][radix-1:0];
