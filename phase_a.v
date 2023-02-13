@@ -23,12 +23,12 @@
 
 //parameter
 //Size_add used for the carry bits(upper bits always be zero)
-module phase_a
+module QR
 #(parameter Size = 3072, radix = 54, Size_fill = 8, Size_add = 256*13)
 (
     input clk,
     input rst_n,
-    input [Size-1:0] a,
+    input [Size+radix:0] a,
     input [Size-1:0] m,
     input [Size+1:0] m_n,
     input [radix+1:0] m_prime,
@@ -53,10 +53,10 @@ module phase_a
         end
     end
     /*******************************************************************************/
-    //used for pipeline,store the value of a
+    //used for pipeline,store the value of A
     reg [Size+radix+1:0] reg_a, reg_a_1;        
     reg [radix+1:0] reg_m_prime;
-    reg [(radix+2)*2-1:0] reg_im;
+    reg [(radix+2)*2-1:0] reg_a_prime;
     //count for each pipeline
     reg [2:0] cnt_0;
     reg [2:0] cnt_1;
@@ -64,10 +64,11 @@ module phase_a
     reg [2:0] cnt_3;
     reg [2:0] cnt_4;
     
-    wire [1:0] res_i0;
-    wire [radix-1:0] res_i1;
-    wire [radix-1:0] gamma_t0 = res_i0+res_i1;
-    wire [radix:0] gamma_t1 = res_i0+res_i1+1;
+    wire [(radix+2)*2-1:0] res_i0;
+    wire [(radix+2)*2-1:0] res_i1;
+    wire [(radix+2)*3-1:0] res_i = res_i0+{res_i1,56'd0};
+    wire [radix-1:0] gamma_t0 = res_i >> 112;
+    wire [radix:0] gamma_t1 = gamma_t0+1;
     //why is not gamma_t0?
     wire [radix-1:0] gamma = gamma_t1[radix]?gamma_t0:gamma_t1[radix-1:0];
 
@@ -95,7 +96,7 @@ module phase_a
     always @(posedge clk) begin
         if(~rst_n) begin
             reg_a <= 0;
-            reg_im <= 0;
+            reg_a_prime <= 0;
             en_inner_loop <= 0;
             a_adder <= 0; b_adder <= 0; cin_adder <= 0; 
             en_addition_0 <= 0;
@@ -106,7 +107,7 @@ module phase_a
         else begin
             if(en_rising_edge) begin
             reg_m_prime <= m_prime;
-            reg_im <= {2'b0, a[(Size-1)-:110]};
+            reg_a_prime <= a[(Size+radix-1)-:112];
             en_multiplier <= 1'b1;
             end
             if(cnt_0 == 3'd1) begin
@@ -114,7 +115,7 @@ module phase_a
             end
             else if(cnt_0 == 3'd3) begin
                 en_inner_loop <= 1'b1;
-                reg_a <= {2'd0, a, 54'd0};
+                reg_a <= {1'd0, a};
             end
             else if(cnt_0 == 3'd4) begin
                 en_inner_loop <= 1'b0;
@@ -229,8 +230,8 @@ module phase_a
     end
 
     //cnt_0
-    multiplier_upper_2_bit multiplier_i0(clk,rst_n,en_multiplier,reg_im[radix+1:0],reg_m_prime,res_i0);
-    multiplier_middle_bit multiplier_i1(clk,rst_n,en_multiplier,reg_im[(radix+2)*2-1:radix+2],reg_m_prime,res_i1);
+    multiplier multiplier_i0(clk,rst_n,en_multiplier,reg_a_prime[radix+1:0],reg_m_prime,res_i0);
+    multiplier multiplier_i1(clk,rst_n,en_multiplier,reg_a_prime[(radix+2)*2-1:radix+2],reg_m_prime,res_i1);
     //cnt_1
     inner_loop_new inner_loop_new(clk, rst_n, gamma[radix-1:0], m_n, en_inner_loop, res_r0, res_r1, en_out_inner_loop);
     //cnt_2
