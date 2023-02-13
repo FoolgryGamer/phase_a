@@ -1,6 +1,6 @@
 `timescale 1ns / 1ps
 
-module multiplier_middle_bit
+module multiplier
 #(parameter mul_size = 80,radix = 78) 
 (
 	input clk,
@@ -8,7 +8,7 @@ module multiplier_middle_bit
 	input en,
 	input [mul_size-1:0] a,
 	input [mul_size-1:0] b,
-	output [radix-1:0] res
+	output [mul_size*2-1:0] res
 );
 	//***************************
     //Below part need modification manually
@@ -93,5 +93,5 @@ module multiplier_middle_bit
 			end
 		end
 	end
-	assign res = res_t[radix*2+1:radix+2];
+	assign res = res_t;
 endmodule
