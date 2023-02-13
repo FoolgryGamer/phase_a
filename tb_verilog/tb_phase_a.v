@@ -53,5 +53,5 @@ module tb(
     end
     
     always #5 clk = ~clk;
-    phase_a phase_a(clk, rst_n, a, m, m_n, m_prime, en, new_a, en_out);
+    phase_a phase_a(clk, rst_n, {1'b0,a,78'b0}, m, m_n, m_prime, en, new_a, en_out);
 endmodule

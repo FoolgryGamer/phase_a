@@ -66,9 +66,9 @@ module phase_a
     
     wire [(radix+2)*2-1:0] res_i0;
     wire [(radix+2)*2-1:0] res_i1;
-    wire [(radix+2)*3-1:0] res = res_i0 + {res_i1,78'b0};
-    wire [radix-1:0] gamma_t0 = res_i0+res_i1;
-    wire [radix:0] gamma_t1 = res_i0+res_i1+1;
+    wire [(radix+2)*3-1:0] res = res_i0 + {res_i1,80'b0};
+    wire [radix-1:0] gamma_t0 = res >> (2*(radix+2));
+    wire [radix:0] gamma_t1 = gamma_t0+1;
     //why is not gamma_t0?
     wire [radix-1:0] gamma = gamma_t1[radix]?gamma_t0:gamma_t1[radix-1:0];
 
