@@ -111,7 +111,7 @@ module addition_3072_128
 endmodule
 
 module unit_adder
-#(parameter Block = 128, Size_add = Block*9, Size_c0 = 9, Size_c1 = 8)
+#(parameter Block = 128)
 (
     input [Block-1:0] a,
     input [Block-1:0] b,
