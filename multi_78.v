@@ -74,7 +74,7 @@ module multi
          end
      endgenerate
     
-	//original code(DSP slice usage is not well-scheduled)
+	// original code(DSP slice usage is not well-scheduled)
     // assign res_0 = wire_a[0]*wire_b[0];
     // assign res_1 = wire_a[0]*wire_b[1];
     // assign res_2 = wire_a[0]*wire_b[2];

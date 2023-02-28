@@ -14,7 +14,8 @@ module multiplier_radix
     reg [(radix+2)*2-1:0] res;
     wire [radix-1:0] gamma_t0;
     wire [radix:0] gamma_t1;
-    wire [radix-1:0] gamma;
+	wire [(radix+2)*2-1:0] res_i0;
+    wire [(radix+2)*2-1:0] res_i1;
 
 	always @(posedge clk) begin
 		if(~rst_n) begin
@@ -22,20 +23,20 @@ module multiplier_radix
 			cnt <= 0;
 		end
 		else begin
-			if(en) begin
+			if(en_multiplier) begin
 				cnt <= 3'd1;
 			end
 			else if(cnt == 3'd1) begin
 				cnt <= 3'd2;
 			end
             else if(cnt == 3'd2) begin
-                res <= (res_i0[(radix+2)*2-1:radix+2] + res_i1) >> (radix+2);
+                res <= res_i0[(radix+2)*2-1:radix+2] + res_i1;
                 cnt <= 0;
             end
 		end
 	end
 
-    assign gamma_t0 = res >> (1*(radix+2));
+    assign gamma_t0 = res >> (radix+2);
     assign gamma_t1 = gamma_t0+1;
     assign gamma = gamma_t1[radix]?gamma_t0:gamma_t1[radix-1:0];
     
