@@ -81,14 +81,7 @@ module multiplier
 				out[15] <= wire_a[3]*wire_b[3];
 			end
 			else if(cnt == 3'd1) begin
-				tmp[0] <= wire_out[0] + wire_out[1] + wire_out[2] + wire_out[3];
-				tmp[1] <= wire_out[4] + wire_out[5] + wire_out[6] + wire_out[7];
-				tmp[2] <= wire_out[8] + wire_out[9] + wire_out[10] + wire_out[11];
-				tmp[3] <= wire_out[12] + wire_out[13] + wire_out[14] + wire_out[15];
-				cnt <= 3'd2;
-			end
-			else if(cnt == 3'd2) begin
-				res_t <= tmp[0] + tmp[1] + tmp[2] + tmp[3];
+				res_t <= wire_out[0] + wire_out[1] + wire_out[2] + wire_out[3] + wire_out[4] + wire_out[5] + wire_out[6] + wire_out[7] + wire_out[8] + wire_out[9] + wire_out[10] + wire_out[11] + wire_out[12] + wire_out[13] + wire_out[14] + wire_out[15];
 				cnt <= 0;
 			end
 		end

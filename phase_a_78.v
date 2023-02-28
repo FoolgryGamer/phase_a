@@ -64,13 +64,13 @@ module phase_a
     reg [2:0] cnt_3;
     reg [2:0] cnt_4;
     
-    wire [(radix+2)*2-1:0] res_i0;
-    wire [(radix+2)*2-1:0] res_i1;
-    wire [(radix+2)*2-1:0] res = res_i0[(radix+2)*2-1:radix+2] + res_i1;
-    wire [radix-1:0] gamma_t0 = res >> (1*(radix+2));
-    wire [radix:0] gamma_t1 = gamma_t0+1;
+    // wire [(radix+2)*2-1:0] res_i0;
+    // wire [(radix+2)*2-1:0] res_i1;
+    // wire [(radix+2)*2-1:0] res = res_i0[(radix+2)*2-1:radix+2] + res_i1;
+    // wire [radix-1:0] gamma_t0 = res >> (1*(radix+2));
+    // wire [radix:0] gamma_t1 = gamma_t0+1;
     //why is not gamma_t0?
-    wire [radix-1:0] gamma = gamma_t1[radix]?gamma_t0:gamma_t1[radix-1:0];
+    wire [radix-1:0] gamma;
 
     //multiplier
     reg en_multiplier;
@@ -229,8 +229,7 @@ module phase_a
     end
 
     //cnt_0
-    multiplier #(.mul_size(radix+2),.radix(radix)) multiplier_i0(clk,rst_n,en_multiplier,reg_a_prime[radix+1:0],reg_m_prime,res_i0);
-    multiplier #(.mul_size(radix+2),.radix(radix)) multiplier_i1(clk,rst_n,en_multiplier,reg_a_prime[(radix+2)*2-1:radix+2],reg_m_prime,res_i1);
+    multiplier_radix #(.mul_size(radix+2),.radix(radix)) multiplier_0(clk,rst_n,en_multiplier,reg_m_prime,reg_a_prime,gamma);
     //cnt_1
     inner_loop_new inner_loop_new(clk, rst_n, gamma[radix-1:0], m_n, en_inner_loop, res_r0, res_r1, en_out_inner_loop);
     //cnt_2
