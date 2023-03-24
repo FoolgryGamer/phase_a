@@ -34,7 +34,6 @@ module inner_loop_new
 	output reg [Size+radix+1:0] r1,
 	output en_out
     );
-
 	parameter blocks = 20;
 	parameter add_size = 43;
 	//**********************************
@@ -54,7 +53,8 @@ module inner_loop_new
 	wire [radix*2-1:0] add1_res_0[blocks-1:0],add1_res_1[blocks-1:0],add1_res_2[blocks-1:0];
 	reg [radix*2-1:0] add2_a_0[blocks-1:0],add2_a_1[blocks-1:0],add2_a_2[blocks-1:0];
 	wire [radix*2-1:0] add2_res[blocks-1:0];
-	
+	reg flag;
+
 	always @(posedge clk) begin
 		if(~rst_n) begin
 			cnt <= 3'd0;
@@ -83,8 +83,10 @@ module inner_loop_new
 				add2_a_1[q] <= 0;
 				add2_a_2[q] <= 0;
 			end
-	        r0 <= 0;
-	        r1 <= 0;
+	        // r0 <= 0;
+	        // r1 <= 0;
+			flag <= 0;
+
 		end
 		else begin
 		if(en) begin
@@ -95,7 +97,6 @@ module inner_loop_new
 		end
 		if(cnt == 3'd1) begin
 			cnt <= 3'd2;
-			// r0[Size+radix+1:Size] <= more_bit;
 			for(j=blocks;j<blocks*2;j=j+1) begin
 				if(j == blocks*2 - 1) begin
 					multi_a[j-blocks] <= {46'b0,a[3073:3042]};
@@ -146,33 +147,37 @@ module inner_loop_new
 				add2_a_1[q] <= add1_res_1[q];
 				add2_a_2[q] <= add1_res_2[q];
 			end
+			flag <= 1;
 		end
 		else if(cnt == 3'd3) begin
 			cnt <= 3'd4;
+			flag <= 0;
 			for(q=0;q<blocks;q=q+1) begin
 				add2_a_0[q] <= add1_res_0[q];
 				add2_a_1[q] <= add1_res_1[q];
 				add2_a_2[q] <= add1_res_2[q];
 			end
-			for(k=0;k<blocks;k=k+1) begin
-				r0[(radix*k)+:radix] <= add2_res[k][radix-1:0];
-				r1[(radix*(k+1))+:radix] <= add2_res[k][radix*2-1:radix];
-			end
+			// for(k=0;k<blocks;k=k+1) begin
+			// 	r0[(radix*k)+:radix] <= add2_res[k][radix-1:0];
+			// 	r1[(radix*(k+1))+:radix] <= add2_res[k][radix*2-1:radix];
+			// end
 		end
-		else if(cnt == 3'd4) begin
-			cnt <= 3'd5;
-			for(k=blocks;k<blocks*2;k=k+1) begin
-				if(k == blocks*2-1) begin
-					// special case due to the imbalance partition
-					r0[(radix*k)+:radix] <= add2_res[k-blocks][radix-1:0];
-					r1[3151:3120] <= add2_res[19][109:78];
-				end
-				else begin
-					r0[(radix*k)+:radix] <= add2_res[k-blocks][radix-1:0];
-					r1[(radix*(k+1))+:radix] <= add2_res[k-blocks][radix*2-1:radix];
-				end
-			end
-		end
+
+
+		// else if(cnt == 3'd4) begin
+		// 	cnt <= 3'd5;
+		// 	for(k=blocks;k<blocks*2;k=k+1) begin
+		// 		if(k == blocks*2-1) begin
+		// 			// special case due to the imbalance partition
+		// 			r0[(radix*k)+:radix] <= add2_res[k-blocks][radix-1:0];
+		// 			r1[3151:3120] <= add2_res[19][109:78];
+		// 		end
+		// 		else begin
+		// 			r0[(radix*k)+:radix] <= add2_res[k-blocks][radix-1:0];
+		// 			r1[(radix*(k+1))+:radix] <= add2_res[k-blocks][radix*2-1:radix];
+		// 		end
+		// 	end
+		// end
 		// else if(cnt == 3'd5) begin
 		// 	//cnt <= 3'd6;
 		// 	for(k=38;k<57;k=k+1) begin
@@ -189,8 +194,39 @@ module inner_loop_new
 		// end
 	end
 	end
-	
-	assign en_out = cnt == 3'd5;
+
+	always @(flag) begin
+		if(~rst_n) begin
+			r0 <= 3152'h0;
+			r1 <= 3152'h0;
+		end
+		else if(en) begin
+			r0 <= 3152'h0;
+			r1 <= 3152'h0;
+		end
+		else if(flag) begin
+			for(k=0;k<blocks;k=k+1) begin
+				r0[(radix*k)+:radix] <= add2_res[k][radix-1:0];
+				r1[(radix*(k+1))+:radix] <= add2_res[k][radix*2-1:radix];
+			end
+		end
+		else begin
+			for(k=blocks;k<blocks*2;k=k+1) begin
+				if(k == blocks*2-1) begin
+					// special case due to the imbalance partition
+					r0[(radix*k)+:radix] <= add2_res[k-blocks][radix-1:0];
+					r1[3151:3120] <= add2_res[19][109:78];
+				end
+				else begin
+					r0[(radix*k)+:radix] <= add2_res[k-blocks][radix-1:0];
+					r1[(radix*(k+1))+:radix] <= add2_res[k-blocks][radix*2-1:radix];
+				end
+			end
+		end
+		
+	end
+
+	assign en_out = cnt == 3'd4;
 	
 	genvar i;
 	generate
